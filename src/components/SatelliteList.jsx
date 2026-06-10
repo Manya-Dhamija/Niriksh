@@ -42,7 +42,7 @@ export default function SatelliteList({ satellites, selected, onSelect }) {
     <div style={styles.sidebar}>
       {/* Header */}
       <div style={styles.header}>
-        <div style={styles.logo}>⬡ ORBIT OS</div>
+        <div style={styles.logo}>⬡ NIRIKSH</div>
         <div style={styles.subtitle}>Live Satellite Tracker</div>
       </div>
 
