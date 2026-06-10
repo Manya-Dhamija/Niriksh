@@ -1,4 +1,4 @@
-# ⬡ Orbit OS — Live Satellite Tracker
+# ⬡ Niriksh — Live Satellite Tracker
 
 A real-time 3D satellite tracker built with React, Three.js, and TLE orbital data.  
 Tracks 10 real satellites using the SGP4 propagation model.
