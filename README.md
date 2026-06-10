@@ -83,17 +83,6 @@ The goal of this phase is to build a digital representation of Earth's orbital e
 
 ---
 
-## Technology Stack
-
-* React
-* Vite
-* Three.js
-* React Three Fiber
-* Satellite.js (SGP4 Propagation)
-* GitHub Pages
-
----
-
 ## Project Philosophy
 
 Most people see satellites as individual objects.
@@ -141,70 +130,14 @@ Tracks 10 real satellites using the SGP4 propagation model.
 
 ## Live Demo
 
-`https://<your-username>.github.io/orbit-os/`  
-*(after deployment — see instructions below)*
-
----
-
-## Getting Started
-
-### Prerequisites
-- Node.js ≥ 16
-- npm ≥ 8
-
-### Local development
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/<your-username>/orbit-os.git
-cd orbit-os
-
-# 2. Install dependencies
-npm install
-
-# 3. Start dev server
-npm run dev
-# → Open http://localhost:5173
-```
-
-### Build for production
-```bash
-npm run build
-# Static files output to ./dist/
-
-npm run preview
-# Preview the production build locally
-```
-
----
-
-## Deploying to GitHub Pages
-
-### Step 1 — Edit `vite.config.js`
-Change the `base` field to match your repository name:
-```js
-base: '/your-repo-name/',  // ← change this
-```
-
-### Step 2 — Push to GitHub
-```bash
-git add .
-git commit -m "initial commit"
-git push origin main
-```
-
-### Step 3 — Enable GitHub Pages via Actions
-1. Go to your repo → **Settings** → **Pages**
-2. Under **Source**, select **GitHub Actions**
-3. The workflow at `.github/workflows/deploy.yml` runs automatically on every push to `main`
-4. After ~1 minute, your site is live at `https://<username>.github.io/<repo-name>/`
+`https://manya-dhamija.github.io/Niriksh/`  
 
 ---
 
 ## Project Structure
 
 ```
-orbit-os/
+Niriksh/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # Auto-deploy to GitHub Pages
@@ -248,11 +181,3 @@ Edit `src/tleData.js` and replace the `tle1` / `tle2` strings for each satellite
 | `vite` | Build tool |
 
 ---
-
-## License
-
-MIT — free to use, modify, and distribute.
-
----
-
-*Built with satellite.js SGP4 model. Orbital positions are computed in real time from TLE data.*
