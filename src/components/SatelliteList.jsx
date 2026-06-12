@@ -1,266 +1,291 @@
-import { useState, useEffect, useRef } from 'react'
-import { parseTLE, getSatelliteGeodetic } from '../utils/orbital.js'
+import { useState, useEffect } from "react";
 
 export default function SatelliteList({ satellites, selected, onSelect }) {
-  const [query, setQuery] = useState('')
-  const [geoData, setGeoData] = useState(null)
-  const satrecs = useRef({})
+  const [query, setQuery] = useState("");
+  const [time, setTime] = useState(new Date());
 
-  // Pre-parse all TLEs once
   useEffect(() => {
-    satellites.forEach(sat => {
-      if (!satrecs.current[sat.name]) {
-        satrecs.current[sat.name] = parseTLE(sat.tle1, sat.tle2)
-      }
-    })
-  }, [satellites])
+    const t = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
 
-  // Update geodetic data for selected satellite
-  useEffect(() => {
-    if (!selected) { setGeoData(null); return }
-    const satrec = satrecs.current[selected]
-    if (!satrec) return
+  const filtered = satellites.filter((s) =>
+    s.name.toLowerCase().includes(query.toLowerCase())
+  );
 
-    const update = () => {
-      const geo = getSatelliteGeodetic(satrec)
-      setGeoData(geo)
-    }
-    update()
-    const interval = setInterval(update, 2000)
-    return () => clearInterval(interval)
-  }, [selected])
-
-  const filtered = satellites.filter(sat =>
-    sat.name.toLowerCase().includes(query.toLowerCase()) ||
-    sat.type?.toLowerCase().includes(query.toLowerCase()) ||
-    sat.agency?.toLowerCase().includes(query.toLowerCase())
-  )
-
-  const selectedSat = satellites.find(s => s.name === selected)
+  const utc = time.toUTCString().split(" ")[4];
 
   return (
-    <div style={styles.sidebar}>
-      {/* Header */}
-      <div style={styles.header}>
-        <div style={styles.logo}>⬡ NIRIKSH</div>
-        <div style={styles.subtitle}>Live Satellite Tracker</div>
+    <aside style={styles.sidebar}>
+      {/* Brand */}
+      <div style={styles.brand}>
+        <div style={styles.brandIcon}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="#00D4FF" strokeWidth="1.5" strokeLinecap="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" />
+            <path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h5M17 12h5M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24" />
+          </svg>
+        </div>
+        <div>
+          <div style={styles.brandName}>NIRIKSH</div>
+          <div style={styles.brandSub}>Live Satellite Tracker</div>
+        </div>
+        <div style={styles.brandTime}>{utc}</div>
       </div>
 
       {/* Search */}
       <div style={styles.searchWrap}>
-        <input
-          type="text"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          placeholder="Search satellites..."
-          style={styles.search}
-        />
+        <div style={styles.searchBox}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="#4A6880" strokeWidth="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input
+            style={styles.searchInput}
+            placeholder="Search satellites..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          {query && (
+            <button style={styles.clearBtn} onClick={() => setQuery("")}>✕</button>
+          )}
+        </div>
       </div>
 
-      {/* Satellite list */}
-      <div style={styles.listWrap}>
-        <div style={styles.listHeader}>
-          {filtered.length} OBJECT{filtered.length !== 1 ? 'S' : ''}
-        </div>
-        {filtered.map(sat => (
-          <button
-            key={sat.name}
-            style={{
-              ...styles.listItem,
-              background: selected === sat.name ? 'rgba(0,255,136,0.08)' : 'transparent',
-              borderLeft: `3px solid ${selected === sat.name ? sat.color : 'transparent'}`,
-            }}
-            onClick={() => onSelect(selected === sat.name ? null : sat.name)}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ ...styles.dot, background: sat.color }} />
-              <div>
-                <div style={{ ...styles.satName, color: selected === sat.name ? sat.color : '#e0e8f0' }}>
-                  {sat.name}
-                </div>
-                <div style={styles.satMeta}>{sat.type} · {sat.agency}</div>
+      {/* Count row */}
+      <div style={styles.countRow}>
+        <span>{filtered.length} satellites</span>
+        <span style={{ color: "#39D353" }}>● LIVE</span>
+      </div>
+
+      {/* List */}
+      <div style={styles.list}>
+        {filtered.map((sat) => {
+          const isActive = selected?.name === sat.name;
+          return (
+            <div
+              key={sat.name}
+              style={{
+                ...styles.card,
+                ...(isActive ? styles.cardActive : {}),
+              }}
+              onClick={() => onSelect(sat)}
+            >
+              {isActive && <div style={styles.activeLine} />}
+              <div style={styles.cardHeader}>
+                <PulseDot active={isActive} />
+                <span style={styles.satName}>{sat.name}</span>
+                <span style={styles.satId}>{sat.catalogId ?? "—"}</span>
+              </div>
+              <div style={styles.dataGrid}>
+                <DataCell label="LAT" val={sat.lat != null ? sat.lat.toFixed(1) + "°" : "—"} active={isActive} />
+                <DataCell label="LON" val={sat.lon != null ? sat.lon.toFixed(1) + "°" : "—"} active={isActive} />
+                <DataCell label="ALT" val={sat.alt != null ? (sat.alt < 1000 ? sat.alt + " km" : (sat.alt / 1000).toFixed(0) + "k km") : "—"} active={isActive} />
               </div>
             </div>
-          </button>
-        ))}
+          );
+        })}
+
+        {filtered.length === 0 && (
+          <div style={styles.empty}>No satellites match "{query}"</div>
+        )}
       </div>
+    </aside>
+  );
+}
 
-      {/* Detail panel for selected satellite */}
-      {selectedSat && (
-        <div style={{ ...styles.detail, borderColor: selectedSat.color + '44' }}>
-          <div style={{ ...styles.detailTitle, color: selectedSat.color }}>
-            {selectedSat.name}
-          </div>
-          <div style={styles.detailRow}>
-            <span style={styles.detailLabel}>TYPE</span>
-            <span style={styles.detailValue}>{selectedSat.type}</span>
-          </div>
-          <div style={styles.detailRow}>
-            <span style={styles.detailLabel}>AGENCY</span>
-            <span style={styles.detailValue}>{selectedSat.agency}</span>
-          </div>
-          {geoData && (
-            <>
-              <div style={styles.detailRow}>
-                <span style={styles.detailLabel}>LAT</span>
-                <span style={styles.detailValue}>{geoData.latitude}°</span>
-              </div>
-              <div style={styles.detailRow}>
-                <span style={styles.detailLabel}>LON</span>
-                <span style={styles.detailValue}>{geoData.longitude}°</span>
-              </div>
-              <div style={styles.detailRow}>
-                <span style={styles.detailLabel}>ALT</span>
-                <span style={styles.detailValue}>{geoData.altitude} km</span>
-              </div>
-            </>
-          )}
-          <div style={styles.liveIndicator}>
-            <span style={styles.liveDot} />
-            LIVE TRACKING
-          </div>
-        </div>
-      )}
+function PulseDot({ active }) {
+  return (
+    <span style={{
+      display: "inline-block",
+      width: 8,
+      height: 8,
+      borderRadius: "50%",
+      background: "#39D353",
+      boxShadow: active ? "0 0 6px #39D353" : "none",
+      flexShrink: 0,
+    }} />
+  );
+}
 
-      <div style={styles.footer}>
-        TLE data via CelesTrak · SGP4 model
+function DataCell({ label, val, active }) {
+  return (
+    <div style={styles.dataCell}>
+      <div style={styles.dataLabel}>{label}</div>
+      <div style={{ ...styles.dataVal, color: active ? "#00D4FF" : "#8BAAC5" }}>
+        {val}
       </div>
     </div>
-  )
+  );
 }
 
 const styles = {
   sidebar: {
-    width: '240px',
-    minWidth: '240px',
-    height: '100vh',
-    background: 'rgba(4, 12, 24, 0.95)',
-    borderRight: '1px solid #0d2137',
-    display: 'flex',
-    flexDirection: 'column',
-    color: '#e0e8f0',
-    fontFamily: "'Courier New', monospace",
-    overflow: 'hidden',
-    zIndex: 10,
+    width: 310,
+    minWidth: 310,
+    height: "100vh",
+    background: "#0A1628",
+    borderRight: "1px solid #1A2E44",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    fontFamily: "'Space Grotesk', sans-serif",
   },
-  header: {
-    padding: '20px 16px 12px',
-    borderBottom: '1px solid #0d2137',
+  brand: {
+    padding: "18px 20px 14px",
+    borderBottom: "1px solid #1A2E44",
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
   },
-  logo: {
-    fontSize: '16px',
-    fontWeight: 'bold',
-    letterSpacing: '4px',
-    color: '#00ff88',
-  },
-  subtitle: {
-    fontSize: '9px',
-    letterSpacing: '2px',
-    color: '#4a6a8a',
-    marginTop: '4px',
-  },
-  searchWrap: {
-    padding: '12px',
-    borderBottom: '1px solid #0d2137',
-  },
-  search: {
-    width: '100%',
-    background: '#050f1e',
-    border: '1px solid #1a3a5c',
-    borderRadius: '3px',
-    padding: '7px 10px',
-    color: '#e0e8f0',
-    fontSize: '11px',
-    fontFamily: "'Courier New', monospace",
-    outline: 'none',
-  },
-  listWrap: {
-    flex: 1,
-    overflowY: 'auto',
-    padding: '4px 0',
-  },
-  listHeader: {
-    fontSize: '9px',
-    letterSpacing: '2px',
-    color: '#2a4a6a',
-    padding: '8px 16px 4px',
-  },
-  listItem: {
-    width: '100%',
-    padding: '10px 14px',
-    border: 'none',
-    borderLeft: '3px solid transparent',
-    cursor: 'pointer',
-    textAlign: 'left',
-    transition: 'background 0.15s',
-  },
-  dot: {
-    width: '8px',
-    height: '8px',
-    borderRadius: '50%',
+  brandIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    background: "rgba(0,212,255,0.08)",
+    border: "1px solid rgba(0,212,255,0.25)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flexShrink: 0,
   },
+  brandName: {
+    fontSize: 17,
+    fontWeight: 700,
+    color: "#E8F4FF",
+    letterSpacing: "0.06em",
+  },
+  brandSub: {
+    fontSize: 10,
+    color: "#4A6880",
+    fontFamily: "'JetBrains Mono', monospace",
+    letterSpacing: "0.08em",
+    marginTop: 1,
+    textTransform: "uppercase",
+  },
+  brandTime: {
+    marginLeft: "auto",
+    fontSize: 10,
+    color: "#00D4FF",
+    fontFamily: "'JetBrains Mono', monospace",
+  },
+  searchWrap: {
+    padding: "12px 14px",
+    borderBottom: "1px solid #1A2E44",
+  },
+  searchBox: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    background: "#050A14",
+    border: "1px solid #1A2E44",
+    borderRadius: 8,
+    padding: "8px 12px",
+  },
+  searchInput: {
+    flex: 1,
+    background: "none",
+    border: "none",
+    outline: "none",
+    color: "#E8F4FF",
+    fontSize: 13,
+    fontFamily: "'Space Grotesk', sans-serif",
+  },
+  clearBtn: {
+    background: "none",
+    border: "none",
+    color: "#4A6880",
+    cursor: "pointer",
+    fontSize: 11,
+    padding: 0,
+  },
+  countRow: {
+    padding: "8px 16px 4px",
+    fontSize: 10,
+    color: "#4A6880",
+    fontFamily: "'JetBrains Mono', monospace",
+    letterSpacing: "0.07em",
+    textTransform: "uppercase",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  list: {
+    flex: 1,
+    overflowY: "auto",
+    padding: "6px 12px 12px",
+    scrollbarWidth: "thin",
+    scrollbarColor: "#1A2E44 transparent",
+  },
+  card: {
+    padding: "12px 14px",
+    borderRadius: 10,
+    border: "1px solid transparent",
+    cursor: "pointer",
+    marginBottom: 6,
+    position: "relative",
+    overflow: "hidden",
+    transition: "all 0.15s ease",
+  },
+  cardActive: {
+    background: "#0F1E35",
+    border: "1px solid rgba(0,212,255,0.3)",
+  },
+  activeLine: {
+    position: "absolute",
+    left: 0,
+    top: "20%",
+    bottom: "20%",
+    width: 2,
+    background: "#00D4FF",
+    borderRadius: "0 2px 2px 0",
+  },
+  cardHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 8,
+  },
   satName: {
-    fontSize: '11px',
-    fontWeight: 'bold',
-    letterSpacing: '0.5px',
+    fontSize: 13,
+    fontWeight: 600,
+    color: "#E8F4FF",
+    flex: 1,
   },
-  satMeta: {
-    fontSize: '9px',
-    color: '#3a5a7a',
-    marginTop: '2px',
-    letterSpacing: '0.5px',
+  satId: {
+    fontSize: 10,
+    color: "#4A6880",
+    fontFamily: "'JetBrains Mono', monospace",
   },
-  detail: {
-    margin: '8px 12px',
-    padding: '12px',
-    border: '1px solid',
-    borderRadius: '4px',
-    background: 'rgba(0,10,20,0.8)',
+  dataGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    gap: 5,
   },
-  detailTitle: {
-    fontSize: '10px',
-    fontWeight: 'bold',
-    letterSpacing: '1px',
-    marginBottom: '10px',
+  dataCell: {
+    background: "#050A14",
+    borderRadius: 5,
+    padding: "5px 7px",
   },
-  detailRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '6px',
+  dataLabel: {
+    fontSize: 9,
+    color: "#4A6880",
+    textTransform: "uppercase",
+    letterSpacing: "0.07em",
+    fontFamily: "'JetBrains Mono', monospace",
   },
-  detailLabel: {
-    fontSize: '9px',
-    color: '#3a5a7a',
-    letterSpacing: '1px',
+  dataVal: {
+    fontSize: 12,
+    fontWeight: 500,
+    fontFamily: "'JetBrains Mono', monospace",
+    marginTop: 2,
   },
-  detailValue: {
-    fontSize: '10px',
-    color: '#b0c8e0',
-    fontWeight: 'bold',
+  empty: {
+    padding: "24px 12px",
+    fontSize: 13,
+    color: "#4A6880",
+    textAlign: "center",
+    fontStyle: "italic",
   },
-  liveIndicator: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-    fontSize: '9px',
-    color: '#00ff88',
-    letterSpacing: '1px',
-    marginTop: '10px',
-  },
-  liveDot: {
-    display: 'inline-block',
-    width: '6px',
-    height: '6px',
-    borderRadius: '50%',
-    background: '#00ff88',
-    animation: 'pulse 1.5s ease-in-out infinite',
-  },
-  footer: {
-    padding: '10px 16px',
-    fontSize: '8px',
-    color: '#1a3a5a',
-    letterSpacing: '0.5px',
-    borderTop: '1px solid #0d2137',
-  },
-}
+};
