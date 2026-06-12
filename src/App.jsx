@@ -1,10 +1,10 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useState } from "react";
-import Earth from "./Earth";
-import Stars from "./Stars";
-import SatellitePoint from "./SatellitePoint";
-import SatelliteList from "./SatelliteList";
+import Earth from "./components/Earth";
+import Stars from "./components/Stars";
+import SatellitePoint from "./components/SatellitePoint";
+import SatelliteList from "./components/SatelliteList";
 import { satellites } from "./tleData";
 
 export default function App() {
