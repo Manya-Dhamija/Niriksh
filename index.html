@@ -2,17 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Niriksh — Live Satellite Tracker</title>
-    <meta name="description" content="Real-time 3D satellite tracker powered by TLE orbital data" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { overflow: hidden; background: #000; font-family: 'Courier New', monospace; }
-      #root { width: 100vw; height: 100vh; }
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body, #root {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #050A14;
+      }
+      ::-webkit-scrollbar { width: 3px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #1A2E44; border-radius: 2px; }
+      * { scrollbar-width: thin; scrollbar-color: #1A2E44 transparent; }
     </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/main.jsx"></script>
   </body>
 </html>
