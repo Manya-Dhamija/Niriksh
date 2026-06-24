@@ -65,7 +65,7 @@ function AboutSection({ onLaunch }) {
         Building the Awareness Layer<br />of Earth's Orbit
       </h1>
       <p style={{ color:"#8BAAC5", lineHeight:1.9, marginBottom:"0.75rem", fontSize:"15px" }}>
-        Niriksh (Sanskrit: "to observe") is a real-time 3D satellite tracker and orbital intelligence platform.
+        Niriksh is a real-time 3D satellite tracker and orbital intelligence platform.
         Using TLE data and the SGP4 propagation model, it computes the exact position of real satellites
         at any moment and renders them on an interactive 3D globe.
       </p>
@@ -104,68 +104,6 @@ function AboutSection({ onLaunch }) {
             <div style={{ fontSize:"20px", marginBottom:"6px" }}>{icon}</div>
             <div style={{ fontWeight:500, marginBottom:"4px", color:"#E8F4FF", fontSize:"14px" }}>{name}</div>
             <div style={{ fontSize:"12px", color:"#4A6880", lineHeight:1.6 }}>{desc}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Roadmap */}
-      <p style={{ letterSpacing:"2px", fontSize:"11px", color:"#00D4FF", marginBottom:"12px" }}>
-        FUTURE ROADMAP
-      </p>
-      <div style={{ display:"flex", flexDirection:"column", gap:"10px", marginBottom:"2.5rem" }}>
-        {[
-          ["Phase 1", "Orbital Visualization", "Visualize real satellites, display orbital paths, search and filtering"],
-          ["Phase 2", "Orbital Awareness", "Conjunction detection, congestion analysis, risk heatmaps, debris tracking"],
-          ["Phase 3", "Orbital Intelligence", "Collision probability, risk scoring, future orbit forecasting, traffic analysis"],
-          ["Phase 4", "Decision Support", "Maneuver recommendations, fuel optimization, mission planning, fleet analytics"],
-          ["Phase 5", "Orbital OS", "Autonomous intelligence, multi-satellite coordination, AI-powered decision support"],
-        ].map(([phase, title, desc], i) => (
-          <div key={phase} style={{
-            display:"flex", gap:"16px", alignItems:"flex-start",
-            background:"#0A1628", border:"1px solid #1A2E44",
-            borderRadius:"10px", padding:"1rem 1.25rem"
-          }}>
-            <div style={{
-              minWidth:"72px", fontSize:"10px", letterSpacing:"1px",
-              color: i === 0 ? "#00D4FF" : "#2A4A60",
-              paddingTop:"2px"
-            }}>
-              {phase}
-            </div>
-            <div>
-              <div style={{ fontWeight:500, color: i === 0 ? "#E8F4FF" : "#4A6880", marginBottom:"3px", fontSize:"14px" }}>
-                {title}
-                {i === 0 && <span style={{
-                  marginLeft:"8px", fontSize:"9px", letterSpacing:"1px",
-                  color:"#00D4FF", border:"1px solid #00D4FF",
-                  borderRadius:"4px", padding:"1px 6px", verticalAlign:"middle"
-                }}>ACTIVE</span>}
-              </div>
-              <div style={{ fontSize:"12px", color:"#2A4A60", lineHeight:1.6 }}>{desc}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Tech Stack */}
-      <p style={{ letterSpacing:"2px", fontSize:"11px", color:"#00D4FF", marginBottom:"12px" }}>
-        TECH STACK
-      </p>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))", gap:"10px", marginBottom:"2.5rem" }}>
-        {[
-          ["React 18","UI framework"],
-          ["Three.js","3D engine"],
-          ["satellite.js","SGP4 physics"],
-          ["Vite","Build tool"],
-          ["React Three Fiber","3D renderer"],
-          ["GitHub Pages","Deployment"],
-        ].map(([name, desc]) => (
-          <div key={name} style={{
-            background:"#0A1628", border:"1px solid #1A2E44",
-            borderRadius:"10px", padding:"0.85rem 1rem"
-          }}>
-            <div style={{ fontWeight:500, marginBottom:"3px", color:"#E8F4FF", fontSize:"13px" }}>{name}</div>
-            <div style={{ fontSize:"11px", color:"#4A6880" }}>{desc}</div>
           </div>
         ))}
       </div>
