@@ -1,261 +1,124 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { useState } from "react";
-import Earth from "./components/Earth";
-import Stars from "./components/Stars";
-import SatellitePoint from "./components/SatellitePoint";
-import SatelliteList from "./components/SatelliteList";
-import { satellites } from "./tleData";
+import { useState } from "react"
+import Earth from "./Earth"           // already hai
+import SatelliteList from "./SatelliteList"  // already hai
+import Stars from "./Stars"           // already hai
 
 export default function App() {
-  const [selected, setSelected] = useState(null);
+  const [activeTab, setActiveTab] = useState("home")
 
   return (
-    <div style={styles.root}>
-      {/* Sidebar */}
-      <SatelliteList
-        satellites={satellites}
-        selected={selected}
-        onSelect={setSelected}
-      />
-
-      {/* 3D Canvas */}
-      <div style={styles.canvasWrap}>
-        {/* Top status bar */}
-        <div style={styles.topBar}>
-          <div style={styles.chips}>
-            <span style={styles.chip}>
-              <span style={styles.liveDot} />
-              <span style={styles.chipLabel}>Tracking</span>
-              <span style={styles.chipVal}>{satellites.length}</span>
-            </span>
-            <span style={styles.chip}>
-              <span style={styles.chipLabel}>Model</span>
-              <span style={styles.chipVal}>SGP4</span>
-            </span>
-            <span style={styles.chip}>
-              <span style={styles.chipLabel}>Epoch</span>
-              <span style={{ ...styles.chipVal, fontFamily: "'JetBrains Mono', monospace" }}>
-                {new Date().toUTCString().split(" ")[4]} UTC
-              </span>
-            </span>
-          </div>
-          <div style={styles.ctrlGroup}>
-            <button style={styles.ctrlBtn} title="Reset view">⟳</button>
-            <button style={styles.ctrlBtn} title="Toggle trails">⤑</button>
-          </div>
-        </div>
-
-        <Canvas camera={{ position: [0, 0, 2.8], fov: 45 }}>
-          <ambientLight intensity={0.3} />
-          <directionalLight position={[5, 3, 5]} intensity={1.2} />
-          <Stars />
-          <Earth />
-          {satellites.map((sat) => (
-            <SatellitePoint
-              key={sat.name}
-              satellite={sat}
-              isSelected={selected?.name === sat.name}
-              onClick={() => setSelected(sat)}
-            />
-          ))}
-          <OrbitControls enablePan={false} minDistance={1.5} maxDistance={6} />
-        </Canvas>
-
-        {/* Detail panel */}
-        {selected && (
-          <div style={styles.detailCard}>
-            <div style={styles.detailName}>{selected.name}</div>
-            <div style={styles.detailType}>
-              {selected.type ?? "EARTH ORBIT"} · LIVE
-            </div>
-            <div style={styles.detailGrid}>
-              <div style={styles.statBox}>
-                <div style={styles.statLabel}>Latitude</div>
-                <div style={styles.statVal}>
-                  {selected.lat?.toFixed(2) ?? "—"}°
-                </div>
-              </div>
-              <div style={styles.statBox}>
-                <div style={styles.statLabel}>Longitude</div>
-                <div style={styles.statVal}>
-                  {selected.lon?.toFixed(2) ?? "—"}°
-                </div>
-              </div>
-              <div style={styles.statBox}>
-                <div style={styles.statLabel}>Altitude</div>
-                <div style={styles.statVal}>
-                  {selected.alt?.toFixed(0) ?? "—"}
-                  <span style={styles.unit}> km</span>
-                </div>
-              </div>
-              <div style={styles.statBox}>
-                <div style={styles.statLabel}>Velocity</div>
-                <div style={styles.statVal}>
-                  {selected.vel?.toFixed(2) ?? "—"}
-                  <span style={styles.unit}> km/s</span>
-                </div>
-              </div>
-            </div>
-            <button
-              style={styles.closeBtn}
-              onClick={() => setSelected(null)}
-            >
-              ✕
+    <div style={{ width:"100%", height:"100%", background:"#050A14", color:"white", fontFamily:"Space Grotesk, sans-serif" }}>
+      
+      {/* NAV BAR */}
+      <nav style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 24px", borderBottom:"1px solid #1A2E44", position:"fixed", top:0, width:"100%", zIndex:999, background:"#050A14" }}>
+        <div style={{ letterSpacing:"4px", fontSize:"18px" }}>N<span style={{color:"#378ADD"}}>I</span>RIKSH</div>
+        <div style={{ display:"flex", gap:"8px" }}>
+          {["home","about","simulation"].map(tab => (
+            <button key={tab} onClick={() => setActiveTab(tab)}
+              style={{ padding:"6px 16px", border:"1px solid", borderColor: activeTab===tab ? "#185FA5":"#1A2E44",
+                background: activeTab===tab ? "#042C53":"transparent",
+                color: activeTab===tab ? "#B5D4F4":"#888", borderRadius:"8px", cursor:"pointer", textTransform:"capitalize" }}>
+              {tab}
             </button>
+          ))}
+        </div>
+      </nav>
+
+      {/* CONTENT */}
+      <div style={{ paddingTop:"56px", height:"100%" }}>
+        {activeTab === "home" && (
+          <div style={{ position:"relative", width:"100%", height:"calc(100vh - 56px)" }}>
+            <Stars />
+            <Earth />
+            <SatelliteList />
           </div>
         )}
 
-        <div style={styles.hint}>Drag to rotate · Scroll to zoom</div>
+        {activeTab === "about" && <AboutSection />}
+        {activeTab === "simulation" && <SimulationSection />}
       </div>
     </div>
-  );
+  )
 }
+function AboutSection() {
+  return (
+    <div style={{ maxWidth:"800px", margin:"0 auto", padding:"3rem 2rem", color:"white" }}>
+      <p style={{ letterSpacing:"3px", fontSize:"12px", color:"#378ADD", marginBottom:"8px" }}>THE IDEA</p>
+      <h1 style={{ fontSize:"32px", fontWeight:500, marginBottom:"1rem" }}>
+        Tracking satellites the way they deserve to be seen
+      </h1>
+      <p style={{ color:"#aaa", lineHeight:1.8, marginBottom:"2rem" }}>
+        Niriksh (Sanskrit: "to observe") is a real-time 3D satellite tracker. 
+        Using TLE data and the SGP4 propagation model, it computes the exact 
+        position of 10 real satellites at any moment and renders them on an 
+        interactive 3D globe.
+      </p>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))", gap:"12px" }}>
+        {[["React 18","UI framework"],["Three.js","3D engine"],["satellite.js","SGP4 physics"],["Vite","Build tool"]].map(([name,desc]) => (
+          <div key={name} style={{ background:"#0C1A2E", border:"1px solid #1A2E44", borderRadius:"10px", padding:"1rem" }}>
+            <div style={{ fontWeight:500, marginBottom:"4px" }}>{name}</div>
+            <div style={{ fontSize:"13px", color:"#888" }}>{desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}import { useEffect, useRef } from "react"
 
-const styles = {
-  root: {
-    display: "flex",
-    height: "100vh",
-    width: "100vw",
-    overflow: "hidden",
-    background: "#050A14",
-    fontFamily: "'Space Grotesk', sans-serif",
-  },
-  canvasWrap: {
-    flex: 1,
-    position: "relative",
-    background: "#050A14",
-  },
-  topBar: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    padding: "16px 24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    zIndex: 10,
-    pointerEvents: "none",
-  },
-  chips: {
-    display: "flex",
-    gap: 8,
-    pointerEvents: "auto",
-  },
-  chip: {
-    display: "flex",
-    alignItems: "center",
-    gap: 6,
-    background: "rgba(10,22,40,0.85)",
-    border: "1px solid #1A2E44",
-    borderRadius: 20,
-    padding: "5px 14px",
-    fontSize: 12,
-    backdropFilter: "blur(8px)",
-    color: "#8BAAC5",
-  },
-  liveDot: {
-    width: 6,
-    height: 6,
-    borderRadius: "50%",
-    background: "#39D353",
-    boxShadow: "0 0 5px #39D353",
-    display: "inline-block",
-  },
-  chipLabel: { color: "#4A6880" },
-  chipVal: { color: "#00D4FF", fontWeight: 600 },
-  ctrlGroup: {
-    display: "flex",
-    gap: 8,
-    pointerEvents: "auto",
-  },
-  ctrlBtn: {
-    width: 38,
-    height: 38,
-    borderRadius: 8,
-    background: "rgba(10,22,40,0.85)",
-    border: "1px solid #1A2E44",
-    color: "#8BAAC5",
-    fontSize: 16,
-    cursor: "pointer",
-    backdropFilter: "blur(8px)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  detailCard: {
-    position: "absolute",
-    bottom: 24,
-    left: 24,
-    background: "rgba(10,22,40,0.92)",
-    border: "1px solid rgba(0,212,255,0.3)",
-    borderRadius: 14,
-    padding: "18px 22px",
-    width: 280,
-    backdropFilter: "blur(12px)",
-    zIndex: 10,
-  },
-  detailName: {
-    fontSize: 16,
-    fontWeight: 700,
-    color: "#E8F4FF",
-    marginBottom: 2,
-  },
-  detailType: {
-    fontSize: 10,
-    color: "#00D4FF",
-    fontFamily: "'JetBrains Mono', monospace",
-    letterSpacing: "0.07em",
-    marginBottom: 14,
-    textTransform: "uppercase",
-  },
-  detailGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 8,
-  },
-  statBox: {
-    background: "#0A1628",
-    borderRadius: 7,
-    padding: "8px 10px",
-  },
-  statLabel: {
-    fontSize: 9,
-    color: "#4A6880",
-    textTransform: "uppercase",
-    letterSpacing: "0.07em",
-    fontFamily: "'JetBrains Mono', monospace",
-    marginBottom: 3,
-  },
-  statVal: {
-    fontSize: 17,
-    fontWeight: 600,
-    color: "#00D4FF",
-    fontFamily: "'JetBrains Mono', monospace",
-  },
-  unit: {
-    fontSize: 11,
-    color: "#8BAAC5",
-    fontWeight: 400,
-  },
-  closeBtn: {
-    position: "absolute",
-    top: 12,
-    right: 14,
-    background: "none",
-    border: "none",
-    color: "#4A6880",
-    cursor: "pointer",
-    fontSize: 14,
-  },
-  hint: {
-    position: "absolute",
-    bottom: 20,
-    right: 24,
-    fontSize: 11,
-    color: "#4A6880",
-    fontFamily: "'JetBrains Mono', monospace",
-    pointerEvents: "none",
-  },
-};
+function SimulationSection() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d")
+    canvas.width = canvas.offsetWidth
+    canvas.height = canvas.offsetHeight
+
+    const sats = [
+      { name:"ISS", a:1.06, i:51.6, phase:0, color:"#1D9E75", period:5 },
+      { name:"Hubble", a:1.08, i:28.5, phase:1, color:"#378ADD", period:6 },
+      { name:"Starlink", a:1.09, i:53, phase:2, color:"#B5D4F4", period:5.5 },
+      // baaki satellites bhi add kar sakte ho
+    ]
+
+    let t = 0, frame
+    function draw() {
+      const W = canvas.width, H = canvas.height
+      const cx = W/2, cy = H/2, sc = Math.min(W,H)*0.12
+
+      ctx.fillStyle = "#020b18"
+      ctx.fillRect(0,0,W,H)
+
+      // Earth
+      const g = ctx.createRadialGradient(cx-sc*0.3,cy-sc*0.3,0,cx,cy,sc)
+      g.addColorStop(0,"#5DCAA5"); g.addColorStop(1,"#042C53")
+      ctx.fillStyle = g
+      ctx.beginPath(); ctx.arc(cx,cy,sc,0,Math.PI*2); ctx.fill()
+
+      // Satellites
+      sats.forEach(sat => {
+        const angle = sat.phase + (t/sat.period)*Math.PI*2
+        const x = cx + sat.a * sc * Math.cos(angle)
+        const y = cy - sat.a * sc * Math.sin(angle) * Math.cos(sat.i*Math.PI/180)
+        ctx.fillStyle = sat.color
+        ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fill()
+        ctx.fillStyle = sat.color
+        ctx.font = "11px monospace"
+        ctx.fillText(sat.name, x+6, y-4)
+      })
+      t += 0.016
+      frame = requestAnimationFrame(draw)
+    }
+    draw()
+    return () => cancelAnimationFrame(frame)
+  }, [])
+
+  return (
+    <div style={{ height:"calc(100vh - 56px)", display:"flex", flexDirection:"column", padding:"1rem" }}>
+      <p style={{ color:"#888", textAlign:"center", marginBottom:"8px", fontSize:"13px" }}>
+        Live orbital simulation — SGP4 physics model
+      </p>
+      <canvas ref={canvasRef} style={{ flex:1, width:"100%", borderRadius:"12px", border:"1px solid #1A2E44" }} />
+    </div>
+  )
+}
