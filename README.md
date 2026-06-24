@@ -1,103 +1,184 @@
 # Niriksh
 
-**Building the Awareness Layer of Earth's Orbit**
+## Building the Intelligence Layer for Planetary Systems
 
-Niriksh is an orbital intelligence platform that aims to monitor, understand, and eventually help manage the increasingly complex environment surrounding Earth.
+Niriksh is a planetary intelligence platform that aims to observe, understand, simulate, and predict the complex systems that shape our world.
 
-As thousands of satellites and debris objects continue to populate Earth's orbit, operators face growing challenges in tracking objects, assessing risks, planning maneuvers, and maintaining mission safety.
+From Earth's orbit and satellite infrastructure to climate, environment, and critical planetary processes, the future will require systems capable of understanding not only what is happening, but what is likely to happen next.
 
-Niriksh starts with a simple goal:
+Niriksh begins with space.
 
-> Visualize and understand everything orbiting Earth.
-
-Over time, it aims to evolve into a platform capable of providing orbital awareness, risk assessment, collision prediction, and decision-support tools for satellite operators.
+Its long-term mission extends to Earth.
 
 ---
 
 ## Vision
 
-The future of space will involve tens of thousands of satellites operating simultaneously.
+Humanity is entering an era where decisions increasingly depend on understanding large-scale interconnected systems.
 
-Niriksh aims to become the intelligence layer that helps understand this environment by answering questions such as:
+Satellites monitor Earth.
 
-* What is currently orbiting Earth?
-* Where will a satellite be in the future?
-* Which orbital regions are becoming congested?
-* Which objects pose potential risks?
-* What actions can operators take to reduce those risks?
+Climate influences infrastructure.
 
-Rather than focusing on a single satellite, Niriksh focuses on the orbital ecosystem as a whole.
+Environmental changes affect economies.
 
----
+Orbital activity impacts communication, navigation, and security.
 
-## Current Scope (MVP)
+Yet these systems are often analyzed in isolation.
 
-The initial version of Niriksh focuses on:
+Niriksh aims to build a unified intelligence layer capable of answering questions such as:
 
-* 🌍 Interactive 3D Earth visualization
-* 🛰️ Real-time satellite simulation
-* 📡 Orbit propagation using public TLE data
-* 🔍 Satellite search and inspection
-* 📊 Basic orbital analytics
+* What is happening right now?
+* Why is it happening?
+* What is likely to happen next?
+* What actions should be taken?
 
-The goal of this phase is to build a digital representation of Earth's orbital environment.
+The goal is not simply to collect data.
+
+The goal is to transform data into awareness, prediction, and decision intelligence.
 
 ---
 
-## Future Roadmap
+## Core Mission
 
-### Phase 1 — Orbital Visualization
+> To build digital representations of planetary-scale systems that continuously observe, understand, predict, and assist human decision-making.
 
-* Visualize real satellites in orbit
-* Display orbital paths
-* Satellite information panels
-* Search and filtering
+---
 
-### Phase 2 — Orbital Awareness
+## Current Focus: Orbital Intelligence
 
-* Conjunction detection
-* Orbital congestion analysis
-* Risk heatmaps
-* Debris tracking
+Earth's orbit is becoming increasingly crowded as thousands of satellites and debris objects continue to populate space.
 
-### Phase 3 — Orbital Intelligence
+Niriksh's first domain focuses on understanding this orbital environment through:
 
-* Collision probability estimation
-* Risk scoring
-* Future orbit forecasting
-* Traffic analysis
+* Real-time satellite tracking
+* Orbit propagation and simulation
+* Orbital analytics
+* Conjunction awareness
+* Orbital risk assessment
 
-### Phase 4 — Decision Support
+Orbit serves as the first layer of the Niriksh intelligence platform.
+
+---
+
+## Long-Term Roadmap
+
+### Phase 1 — Awareness
+
+Build systems capable of observing and visualizing complex environments.
+
+Initial focus:
+
+* Satellite tracking
+* Orbital visualization
+* Object monitoring
+* Environmental data integration
+
+---
+
+### Phase 2 — Understanding
+
+Move beyond observation toward system-level understanding.
+
+Capabilities:
+
+* Risk analysis
+* Pattern detection
+* Congestion analysis
+* Anomaly identification
+
+---
+
+### Phase 3 — Prediction
+
+Develop predictive models that estimate future system states.
+
+Capabilities:
+
+* Collision forecasting
+* Orbital evolution prediction
+* Environmental forecasting
+* Infrastructure risk prediction
+
+---
+
+### Phase 4 — Decision Intelligence
+
+Provide actionable recommendations rather than raw information.
+
+Capabilities:
 
 * Maneuver recommendations
-* Fuel optimization
-* Mission planning assistance
-* Fleet-level analytics
+* Resource optimization
+* Mission planning
+* Risk mitigation strategies
 
-### Phase 5 — Orbital Operating System
+---
 
-* Autonomous orbital intelligence
-* Multi-satellite coordination
-* Orbital traffic management tools
-* AI-powered decision support
+### Phase 5 — Planetary Digital Twin
+
+Create continuously updated digital representations of critical planetary systems.
+
+Potential domains include:
+
+* Earth's orbital environment
+* Climate systems
+* Environmental monitoring
+* Infrastructure resilience
+* Disaster preparedness
+* Space-Earth interaction analysis
+
+---
+
+### Phase 6 — Planetary Operating System
+
+A future platform capable of coordinating intelligence across multiple domains.
+
+The objective is to help governments, organizations, researchers, and operators make informed decisions using real-time awareness and predictive intelligence.
 
 ---
 
 ## Project Philosophy
 
-Most people see satellites as individual objects.
+Most systems today answer:
 
-Niriksh sees Earth's orbit as a living system.
+> What happened?
 
-The mission is not simply to track satellites.
+Some systems answer:
 
-The mission is to build awareness of the orbital environment itself.
+> What is happening?
+
+Niriksh aims to answer:
+
+> What will happen next, and what should we do about it?
+
+The mission is not simply to track objects.
+
+The mission is to understand systems.
 
 ---
 
-## Long-Term Mission
+## Current MVP
 
-> To create a digital twin of Earth's orbital environment that continuously observes, understands, predicts, and assists in the safe and efficient operation of satellites in space.
+The first version of Niriksh focuses on orbital intelligence:
+
+* Interactive 3D Earth visualization
+* Real-time satellite simulation
+* Orbit propagation using public TLE data
+* Satellite search and inspection
+* Basic orbital analytics
+
+This forms the foundation for future intelligence and simulation capabilities.
+
+---
+
+## Long-Term Vision
+
+> To build the intelligence layer that helps humanity understand, predict, and navigate complex planetary-scale systems.
+
+The journey begins with orbit.
+
+The destination is planetary intelligence.
 
 ---
 
@@ -105,79 +186,4 @@ The mission is to build awareness of the orbital environment itself.
 
 🚧 Early Development
 
-Currently focused on building the first visualization and simulation layer.
-
-The journey begins with understanding orbit.
-
-The destination is orbital intelligence.
-
-
-A real-time 3D satellite tracker built with React, Three.js, and TLE orbital data.  
-Tracks 10 real satellites using the SGP4 propagation model.
-
-![Tech Stack](https://img.shields.io/badge/React-18-61DAFB?logo=react) 
-![Three.js](https://img.shields.io/badge/Three.js-0.157-black?logo=three.js)
-![License](https://img.shields.io/badge/License-MIT-green)
-
-## Features
-
-- 🌍 Interactive 3D Earth with orbit controls (rotate, zoom)
-- 🛰️ 10 real satellites tracked in real time (ISS, Hubble, Landsat, GOES, Starlink, and more)
-- 📡 SGP4 orbital propagation via `satellite.js`
-- 🔍 Searchable satellite list with live lat/lon/altitude readout
-- 🌠 Orbit trail visualization on selection
-- 🚀 Deploys automatically to GitHub Pages via GitHub Actions
-
-## Live Demo
-
-`https://manya-dhamija.github.io/Niriksh/`  
-
----
-
-## Project Structure
-
-```
-Niriksh/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # Auto-deploy to GitHub Pages
-├── src/
-│   ├── components/
-│   │   ├── Earth.jsx           # 3D Earth globe
-│   │   ├── SatellitePoint.jsx  # Individual satellite + trail
-│   │   ├── SatelliteList.jsx   # Sidebar UI
-│   │   └── Stars.jsx           # Background starfield
-│   ├── utils/
-│   │   └── orbital.js          # SGP4 propagation helpers
-│   ├── tleData.js              # TLE data for 10 satellites
-│   ├── App.jsx                 # Root component
-│   └── main.jsx                # Entry point
-├── index.html
-├── vite.config.js
-└── package.json
-```
-
----
-
-## Updating TLE Data
-
-TLE (Two-Line Element) data gets stale over time. Refresh it from:
-- **CelesTrak**: https://celestrak.org/SOCRATES/
-- **Space-Track**: https://www.space-track.org/ (free account required)
-
-Edit `src/tleData.js` and replace the `tle1` / `tle2` strings for each satellite.
-
----
-
-## Tech Stack
-
-| Package | Purpose |
-|---|---|
-| `react` + `react-dom` | UI framework |
-| `three` | 3D engine |
-| `@react-three/fiber` | React renderer for Three.js |
-| `@react-three/drei` | R3F helpers (OrbitControls, Html) |
-| `satellite.js` | SGP4 orbital propagation |
-| `vite` | Build tool |
-
----
+Currently focused on building the first orbital awareness and simulation layer while laying the foundation for a broader planetary intelligence platform.
