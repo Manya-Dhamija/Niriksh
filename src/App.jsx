@@ -58,35 +58,50 @@ function AboutSection({ onLaunch }) {
     }}>
 
       {/* Hero */}
+
       <p style={{ letterSpacing:"3px", fontSize:"11px", color:"#00D4FF", marginBottom:"8px" }}>
-        ORBITAL INTELLIGENCE PLATFORM
+         PLANETARY INTELLIGENCE PLATFORM
       </p>
+
       <h1 style={{ fontSize:"36px", fontWeight:600, marginBottom:"1rem", color:"#E8F4FF", lineHeight:1.3 }}>
-        Building the Awareness Layer<br />of Earth's Orbit
+         Building the Intelligence Layer
+      <br />
+         for Planetary Systems
       </h1>
+
       <p style={{ color:"#8BAAC5", lineHeight:1.9, marginBottom:"0.75rem", fontSize:"15px" }}>
-        Niriksh is a real-time 3D satellite tracker and orbital intelligence platform.
-        Using TLE data and the SGP4 propagation model, it computes the exact position of real satellites
-        at any moment and renders them on an interactive 3D globe.
+         Niriksh is a planetary intelligence platform focused on understanding,
+         simulating, and predicting complex systems that shape our world.
+         From Earth's orbit to climate, infrastructure, and environmental systems,
+         the goal is to transform raw data into awareness, prediction, and decision intelligence.
       </p>
+
       <p style={{ color:"#8BAAC5", lineHeight:1.9, marginBottom:"2rem", fontSize:"15px" }}>
-        As thousands of satellites and debris objects continue to populate Earth's orbit, operators face
-        growing challenges in tracking objects, assessing risks, and maintaining mission safety.
-        Niriksh starts with a simple goal:
+         The first version of Niriksh begins with orbital intelligence —
+         building a digital representation of Earth's orbital environment through
+         real-time satellite tracking, simulation, and analytics. Over time,
+         Niriksh aims to evolve into a broader platform capable of helping
+         understand and manage planetary-scale systems.
       </p>
 
       {/* Mission quote */}
+
       <div style={{
-        borderLeft:"3px solid #00D4FF", paddingLeft:"1.25rem",
-        marginBottom:"2.5rem", color:"#E8F4FF", fontSize:"16px",
-        fontStyle:"italic", lineHeight:1.8
+      borderLeft:"3px solid #00D4FF",
+      paddingLeft:"1.25rem",
+      marginBottom:"2.5rem",
+      color:"#E8F4FF",
+      fontSize:"16px",
+      fontStyle:"italic",
+      lineHeight:1.8
       }}>
-        "Visualize and understand everything orbiting Earth."
+       "Observe. Understand. Predict. Assist."
       </div>
+
 
       {/* MVP Features */}
       <p style={{ letterSpacing:"2px", fontSize:"11px", color:"#00D4FF", marginBottom:"12px" }}>
-        CURRENT SCOPE — MVP
+        CURRENT SCOPE — ORBITAL INTELLIGENCE
       </p>
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:"12px", marginBottom:"2.5rem" }}>
         {[
@@ -108,19 +123,47 @@ function AboutSection({ onLaunch }) {
         ))}
       </div>
 
-      {/* Long-term mission */}
-      <div style={{
-        background:"#0A1628", border:"1px solid #1A2E44",
-        borderRadius:"12px", padding:"1.5rem", marginBottom:"2.5rem"
-      }}>
-        <p style={{ fontSize:"11px", letterSpacing:"2px", color:"#00D4FF", marginBottom:"8px", textTransform:"uppercase" }}>
-          Long-Term Mission
-        </p>
-        <p style={{ color:"#8BAAC5", lineHeight:1.8, fontSize:"14px", fontStyle:"italic" }}>
-          "To create a digital twin of Earth's orbital environment that continuously observes, understands,
-          predicts, and assists in the safe and efficient operation of satellites in space."
-        </p>
-      </div>
+      <p style={{
+  color:"#4A6880",
+  fontSize:"13px",
+  marginTop:"1rem",
+  lineHeight:1.8
+}}>
+  Orbit is the first domain of the Niriksh platform. Future domains may include
+  climate systems, environmental monitoring, disaster resilience, infrastructure intelligence,
+  and planetary digital twins.
+</p>
+
+{/* Long-Term Mission */}
+
+<div style={{
+  background:"#0A1628",
+  border:"1px solid #1A2E44",
+  borderRadius:"12px",
+  padding:"1.5rem",
+  marginBottom:"2.5rem"
+}}>
+  <p style={{
+    fontSize:"11px",
+    letterSpacing:"2px",
+    color:"#00D4FF",
+    marginBottom:"8px",
+    textTransform:"uppercase"
+  }}>
+    Long-Term Mission
+  </p>
+
+  <p style={{
+    color:"#8BAAC5",
+    lineHeight:1.8,
+    fontSize:"14px",
+    fontStyle:"italic"
+  }}>
+    "To build digital twins of planetary-scale systems that continuously
+    observe, understand, predict, and support decision-making for humanity."
+  </p>
+</div>
+
 
       {/* CTA */}
       <div style={{ textAlign:"center", paddingBottom:"2rem" }}>
