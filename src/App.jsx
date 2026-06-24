@@ -1,7 +1,8 @@
 import { useState } from "react"
-import Earth from "../Earth"
-import Stars from "../Stars"
-import SatelliteList from "../SatelliteList"           // already hai
+import Earth from "./components/Earth"
+import Stars from "./components/Stars"
+import SatelliteList from "./components/SatelliteList"
+import SatellitePoint from "./components/SatellitePoint"         // already hai
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home")
