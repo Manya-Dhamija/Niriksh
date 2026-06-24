@@ -8,7 +8,7 @@ import SatellitePoint from "./components/SatellitePoint"
 import { satellites as tleList } from "./tleData"
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("home")
+  const [activeTab, setActiveTab] = useState("about")
   const [selected, setSelected] = useState(null)
 
   return (
@@ -25,7 +25,7 @@ export default function App() {
           N<span style={{color:"#00D4FF"}}>I</span>RIKSH
         </div>
         <div style={{ display:"flex", gap:"8px" }}>
-          {["home","about","simulation"].map(tab => (
+          {["about", "simulation"].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
               style={{
                 padding:"6px 16px", border:"1px solid",
@@ -43,70 +43,115 @@ export default function App() {
 
       {/* CONTENT */}
       <div style={{ paddingTop:"56px", height:"calc(100vh - 56px)" }}>
-
-        {/* HOME */}
-        {activeTab === "home" && (
-          <div style={{ display:"flex", width:"100%", height:"100%" }}>
-
-            {/* Satellite sidebar */}
-            <SatelliteList
-              satellites={tleList.map(s => ({
-                ...s,
-                lat: null,
-                lon: null,
-                alt: null,
-              }))}
-              selected={selected}
-              onSelect={setSelected}
-            />
-
-            {/* 3D Canvas */}
-            <div style={{ flex:1, position:"relative" }}>
-              <Canvas camera={{ position: [0, 0, 3] }}>
-                <ambientLight intensity={0.3} />
-                <pointLight position={[5, 5, 5]} intensity={1.2} />
-                <Stars />
-                <Earth />
-                {tleList.map((sat) => (
-                  <SatellitePoint
-                    key={sat.name}
-                    tle1={sat.tle1}
-                    tle2={sat.tle2}
-                    color={sat.color}
-                    name={sat.name}
-                    isSelected={selected?.name === sat.name}
-                    onClick={() => setSelected(sat)}
-                  />
-                ))}
-                <OrbitControls enablePan={false} minDistance={1.5} maxDistance={8} />
-              </Canvas>
-            </div>
-
-          </div>
-        )}
-
-        {activeTab === "about" && <AboutSection />}
+        {activeTab === "about" && <AboutSection onLaunch={() => setActiveTab("simulation")} />}
         {activeTab === "simulation" && <SimulationSection />}
       </div>
     </div>
   )
 }
 
-function AboutSection() {
+function AboutSection({ onLaunch }) {
   return (
-    <div style={{ maxWidth:"800px", margin:"0 auto", padding:"3rem 2rem", color:"white", overflowY:"auto", height:"100%" }}>
-      <p style={{ letterSpacing:"3px", fontSize:"12px", color:"#00D4FF", marginBottom:"8px" }}>THE IDEA</p>
-      <h1 style={{ fontSize:"32px", fontWeight:500, marginBottom:"1rem", color:"#E8F4FF" }}>
-        Tracking satellites the way they deserve to be seen
-      </h1>
-      <p style={{ color:"#8BAAC5", lineHeight:1.8, marginBottom:"2rem" }}>
-        Niriksh (Sanskrit: "to observe") is a real-time 3D satellite tracker.
-        Using TLE data and the SGP4 propagation model, it computes the exact
-        position of 10 real satellites at any moment and renders them on an
-        interactive 3D globe. Rotate the Earth, zoom in, select a satellite
-        to see its orbital trail, and watch it move in real time.
+    <div style={{
+      maxWidth:"860px", margin:"0 auto", padding:"3rem 2rem",
+      color:"white", overflowY:"auto", height:"100%", boxSizing:"border-box"
+    }}>
+
+      {/* Hero */}
+      <p style={{ letterSpacing:"3px", fontSize:"11px", color:"#00D4FF", marginBottom:"8px" }}>
+        ORBITAL INTELLIGENCE PLATFORM
       </p>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))", gap:"12px", marginBottom:"2rem" }}>
+      <h1 style={{ fontSize:"36px", fontWeight:600, marginBottom:"1rem", color:"#E8F4FF", lineHeight:1.3 }}>
+        Building the Awareness Layer<br />of Earth's Orbit
+      </h1>
+      <p style={{ color:"#8BAAC5", lineHeight:1.9, marginBottom:"0.75rem", fontSize:"15px" }}>
+        Niriksh (Sanskrit: "to observe") is a real-time 3D satellite tracker and orbital intelligence platform.
+        Using TLE data and the SGP4 propagation model, it computes the exact position of real satellites
+        at any moment and renders them on an interactive 3D globe.
+      </p>
+      <p style={{ color:"#8BAAC5", lineHeight:1.9, marginBottom:"2rem", fontSize:"15px" }}>
+        As thousands of satellites and debris objects continue to populate Earth's orbit, operators face
+        growing challenges in tracking objects, assessing risks, and maintaining mission safety.
+        Niriksh starts with a simple goal:
+      </p>
+
+      {/* Mission quote */}
+      <div style={{
+        borderLeft:"3px solid #00D4FF", paddingLeft:"1.25rem",
+        marginBottom:"2.5rem", color:"#E8F4FF", fontSize:"16px",
+        fontStyle:"italic", lineHeight:1.8
+      }}>
+        "Visualize and understand everything orbiting Earth."
+      </div>
+
+      {/* MVP Features */}
+      <p style={{ letterSpacing:"2px", fontSize:"11px", color:"#00D4FF", marginBottom:"12px" }}>
+        CURRENT SCOPE — MVP
+      </p>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:"12px", marginBottom:"2.5rem" }}>
+        {[
+          ["🌍", "Interactive 3D Earth", "Rotate, zoom, and explore the globe in real time"],
+          ["🛰️", "Live Satellite Tracking", "10 real satellites tracked via SGP4 propagation"],
+          ["📡", "TLE Orbit Data", "Public Two-Line Element sets from CelesTrak & Space-Track"],
+          ["🔍", "Search & Inspect", "Satellite list with live lat / lon / altitude readout"],
+          ["🌠", "Orbit Trail", "Visual trail rendered on selection"],
+          ["📊", "Orbital Analytics", "Basic analytics on orbital parameters"],
+        ].map(([icon, name, desc]) => (
+          <div key={name} style={{
+            background:"#0A1628", border:"1px solid #1A2E44",
+            borderRadius:"10px", padding:"1rem"
+          }}>
+            <div style={{ fontSize:"20px", marginBottom:"6px" }}>{icon}</div>
+            <div style={{ fontWeight:500, marginBottom:"4px", color:"#E8F4FF", fontSize:"14px" }}>{name}</div>
+            <div style={{ fontSize:"12px", color:"#4A6880", lineHeight:1.6 }}>{desc}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Roadmap */}
+      <p style={{ letterSpacing:"2px", fontSize:"11px", color:"#00D4FF", marginBottom:"12px" }}>
+        FUTURE ROADMAP
+      </p>
+      <div style={{ display:"flex", flexDirection:"column", gap:"10px", marginBottom:"2.5rem" }}>
+        {[
+          ["Phase 1", "Orbital Visualization", "Visualize real satellites, display orbital paths, search and filtering"],
+          ["Phase 2", "Orbital Awareness", "Conjunction detection, congestion analysis, risk heatmaps, debris tracking"],
+          ["Phase 3", "Orbital Intelligence", "Collision probability, risk scoring, future orbit forecasting, traffic analysis"],
+          ["Phase 4", "Decision Support", "Maneuver recommendations, fuel optimization, mission planning, fleet analytics"],
+          ["Phase 5", "Orbital OS", "Autonomous intelligence, multi-satellite coordination, AI-powered decision support"],
+        ].map(([phase, title, desc], i) => (
+          <div key={phase} style={{
+            display:"flex", gap:"16px", alignItems:"flex-start",
+            background:"#0A1628", border:"1px solid #1A2E44",
+            borderRadius:"10px", padding:"1rem 1.25rem"
+          }}>
+            <div style={{
+              minWidth:"72px", fontSize:"10px", letterSpacing:"1px",
+              color: i === 0 ? "#00D4FF" : "#2A4A60",
+              paddingTop:"2px"
+            }}>
+              {phase}
+            </div>
+            <div>
+              <div style={{ fontWeight:500, color: i === 0 ? "#E8F4FF" : "#4A6880", marginBottom:"3px", fontSize:"14px" }}>
+                {title}
+                {i === 0 && <span style={{
+                  marginLeft:"8px", fontSize:"9px", letterSpacing:"1px",
+                  color:"#00D4FF", border:"1px solid #00D4FF",
+                  borderRadius:"4px", padding:"1px 6px", verticalAlign:"middle"
+                }}>ACTIVE</span>}
+              </div>
+              <div style={{ fontSize:"12px", color:"#2A4A60", lineHeight:1.6 }}>{desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tech Stack */}
+      <p style={{ letterSpacing:"2px", fontSize:"11px", color:"#00D4FF", marginBottom:"12px" }}>
+        TECH STACK
+      </p>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))", gap:"10px", marginBottom:"2.5rem" }}>
         {[
           ["React 18","UI framework"],
           ["Three.js","3D engine"],
@@ -115,32 +160,47 @@ function AboutSection() {
           ["React Three Fiber","3D renderer"],
           ["GitHub Pages","Deployment"],
         ].map(([name, desc]) => (
-          <div key={name} style={{ background:"#0A1628", border:"1px solid #1A2E44", borderRadius:"10px", padding:"1rem" }}>
-            <div style={{ fontWeight:500, marginBottom:"4px", color:"#E8F4FF" }}>{name}</div>
-            <div style={{ fontSize:"13px", color:"#4A6880" }}>{desc}</div>
+          <div key={name} style={{
+            background:"#0A1628", border:"1px solid #1A2E44",
+            borderRadius:"10px", padding:"0.85rem 1rem"
+          }}>
+            <div style={{ fontWeight:500, marginBottom:"3px", color:"#E8F4FF", fontSize:"13px" }}>{name}</div>
+            <div style={{ fontSize:"11px", color:"#4A6880" }}>{desc}</div>
           </div>
         ))}
       </div>
-      <div style={{ background:"#0A1628", border:"1px solid #1A2E44", borderRadius:"12px", padding:"1.5rem" }}>
-        <p style={{ fontSize:"11px", letterSpacing:"2px", color:"#00D4FF", marginBottom:"8px", textTransform:"uppercase" }}>What is TLE data?</p>
-        <p style={{ color:"#8BAAC5", lineHeight:1.8, fontSize:"14px", marginBottom:"1rem" }}>
-          A Two-Line Element set is a standardised format for specifying the orbital
-          parameters of a satellite — inclination, eccentricity, mean motion, and more.
-          Niriksh reads these and runs them through SGP4 every frame for live positions.
+
+      {/* Long-term mission */}
+      <div style={{
+        background:"#0A1628", border:"1px solid #1A2E44",
+        borderRadius:"12px", padding:"1.5rem", marginBottom:"2.5rem"
+      }}>
+        <p style={{ fontSize:"11px", letterSpacing:"2px", color:"#00D4FF", marginBottom:"8px", textTransform:"uppercase" }}>
+          Long-Term Mission
         </p>
-        <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"11px", color:"#39D353", lineHeight:2, background:"#050A14", padding:"1rem", borderRadius:"8px" }}>
-          <div>1 25544U 98067A   23074.92  .00017148  00000-0  10270-3 0  9998</div>
-          <div>2 25544  51.6439 250.6048 0008945 310.4539 285.5280 15.50121663</div>
-        </div>
+        <p style={{ color:"#8BAAC5", lineHeight:1.8, fontSize:"14px", fontStyle:"italic" }}>
+          "To create a digital twin of Earth's orbital environment that continuously observes, understands,
+          predicts, and assists in the safe and efficient operation of satellites in space."
+        </p>
+      </div>
+
+      {/* CTA */}
+      <div style={{ textAlign:"center", paddingBottom:"2rem" }}>
+        <button onClick={onLaunch} style={{
+          padding:"12px 32px", background:"rgba(0,212,255,0.1)",
+          border:"1px solid #00D4FF", color:"#00D4FF",
+          borderRadius:"10px", cursor:"pointer", fontSize:"14px",
+          fontFamily:"'Space Grotesk', sans-serif", letterSpacing:"2px",
+          textTransform:"uppercase"
+        }}>
+          Launch Simulation →
+        </button>
       </div>
     </div>
   )
 }
 
 function SimulationSection() {
-  const canvasRef = typeof window !== "undefined" ? { current: null } : { current: null }
-  
-  // Use useEffect via inline approach
   const mountRef = (canvas) => {
     if (!canvas || canvas._started) return
     canvas._started = true
@@ -174,7 +234,6 @@ function SimulationSection() {
       ctx.fillStyle = "#020b18"
       ctx.fillRect(0, 0, W, H)
 
-      // Stars
       for (let i = 0; i < 150; i++) {
         const sx = (i * 173.1) % W
         const sy = (i * 97.3 + 40) % H
@@ -185,7 +244,6 @@ function SimulationSection() {
         ctx.fill()
       }
 
-      // Earth
       const g = ctx.createRadialGradient(cx - sc*0.3, cy - sc*0.3, 0, cx, cy, sc)
       g.addColorStop(0, "#1a6ea8")
       g.addColorStop(0.6, "#0d3d6b")
@@ -195,14 +253,12 @@ function SimulationSection() {
       ctx.arc(cx, cy, sc, 0, Math.PI*2)
       ctx.fill()
 
-      // Atmosphere
       ctx.strokeStyle = "rgba(79,195,247,0.15)"
       ctx.lineWidth = 4
       ctx.beginPath()
       ctx.arc(cx, cy, sc + 2, 0, Math.PI*2)
       ctx.stroke()
 
-      // Satellites
       sats.forEach(sat => {
         const angle = sat.phase + (t / sat.period) * Math.PI * 2
         const tilt = sat.i * Math.PI / 180
@@ -212,13 +268,7 @@ function SimulationSection() {
         const behind = zVal < 0
 
         ctx.globalAlpha = behind ? 0.25 : 1
-
-        // Glow
-        if (!behind) {
-          ctx.shadowColor = sat.color
-          ctx.shadowBlur = 6
-        }
-
+        if (!behind) { ctx.shadowColor = sat.color; ctx.shadowBlur = 6 }
         ctx.fillStyle = sat.color
         ctx.beginPath()
         ctx.arc(x, y, 3.5, 0, Math.PI*2)
