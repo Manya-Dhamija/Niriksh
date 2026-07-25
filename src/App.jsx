@@ -1,284 +1,323 @@
-import { useState } from "react"
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls } from "@react-three/drei"
-import Earth from "./components/Earth"
-import Stars from "./components/Stars"
-import SatelliteList from "./components/SatelliteList"
-import SatellitePoint from "./components/SatellitePoint"
-import { satellites as tleList } from "./tleData"
-
-export default function App() {
-  const [activeTab, setActiveTab] = useState("about")
-  const [selected, setSelected] = useState(null)
-
-  return (
-    <div style={{ width:"100%", height:"100vh", background:"#050A14", color:"white", fontFamily:"'Space Grotesk', sans-serif" }}>
-
-      {/* NAV BAR */}
-      <nav style={{
-        display:"flex", alignItems:"center", justifyContent:"space-between",
-        padding:"12px 24px", borderBottom:"1px solid #1A2E44",
-        position:"fixed", top:0, width:"100%", zIndex:999, background:"#050A14",
-        boxSizing:"border-box"
-      }}>
-        <div style={{ letterSpacing:"4px", fontSize:"18px" }}>
-          N<span style={{color:"#00D4FF"}}>I</span>RIKSH
-        </div>
-        <div style={{ display:"flex", gap:"8px" }}>
-          {["about", "simulation"].map(tab => (
-            <button key={tab} onClick={() => setActiveTab(tab)}
-              style={{
-                padding:"6px 16px", border:"1px solid",
-                borderColor: activeTab===tab ? "#00D4FF" : "#1A2E44",
-                background: activeTab===tab ? "rgba(0,212,255,0.1)" : "transparent",
-                color: activeTab===tab ? "#00D4FF" : "#4A6880",
-                borderRadius:"8px", cursor:"pointer", textTransform:"capitalize",
-                fontFamily:"'Space Grotesk', sans-serif", fontSize:"13px"
-              }}>
-              {tab}
-            </button>
-          ))}
-        </div>
-      </nav>
-
-      {/* CONTENT */}
-      <div style={{ paddingTop:"56px", height:"calc(100vh - 56px)" }}>
-        {activeTab === "about" && <AboutSection onLaunch={() => setActiveTab("simulation")} />}
-        {activeTab === "simulation" && <SimulationSection />}
-      </div>
-    </div>
-  )
-}
-
 function AboutSection({ onLaunch }) {
   return (
-    <div style={{
-      maxWidth:"860px", margin:"0 auto", padding:"3rem 2rem",
-      color:"white", overflowY:"auto", height:"100%", boxSizing:"border-box"
-    }}>
-
+    <div
+      style={{
+        maxWidth: "900px",
+        margin: "0 auto",
+        padding: "3rem 2rem",
+        color: "white",
+        overflowY: "auto",
+        height: "100%",
+        boxSizing: "border-box",
+      }}
+    >
       {/* Hero */}
 
-      <p style={{ letterSpacing:"3px", fontSize:"11px", color:"#00D4FF", marginBottom:"8px" }}>
-         PLANETARY INTELLIGENCE PLATFORM
+      <p
+        style={{
+          letterSpacing: "3px",
+          fontSize: "11px",
+          color: "#00D4FF",
+          marginBottom: "8px",
+          textTransform: "uppercase",
+        }}
+      >
+        SPACE OPERATIONS INTELLIGENCE PLATFORM
       </p>
 
-      <h1 style={{ fontSize:"36px", fontWeight:600, marginBottom:"1rem", color:"#E8F4FF", lineHeight:1.3 }}>
-         Building the Intelligence Layer
-      <br />
-         for Planetary Systems
+      <h1
+        style={{
+          fontSize: "38px",
+          fontWeight: 600,
+          marginBottom: "1.2rem",
+          color: "#E8F4FF",
+          lineHeight: 1.3,
+        }}
+      >
+        Building the Intelligence Layer
+        <br />
+        for Space Operations
       </h1>
 
-      <p style={{ color:"#8BAAC5", lineHeight:1.9, marginBottom:"0.75rem", fontSize:"15px" }}>
-         Niriksh is a planetary intelligence platform focused on understanding,
-         simulating, and predicting complex systems that shape our world.
-         From Earth's orbit to climate, infrastructure, and environmental systems,
-         the goal is to transform raw data into awareness, prediction, and decision intelligence.
+      <p
+        style={{
+          color: "#8BAAC5",
+          lineHeight: 1.9,
+          marginBottom: "1rem",
+          fontSize: "15px",
+        }}
+      >
+        Niriksh is an AI-powered space intelligence platform designed to help
+        operators observe, simulate, understand, predict, and optimize the
+        increasingly complex orbital environment surrounding Earth.
       </p>
 
-      <p style={{ color:"#8BAAC5", lineHeight:1.9, marginBottom:"2rem", fontSize:"15px" }}>
-         The first version of Niriksh begins with orbital intelligence —
-         building a digital representation of Earth's orbital environment through
-         real-time satellite tracking, simulation, and analytics. Over time,
-         Niriksh aims to evolve into a broader platform capable of helping
-         understand and manage planetary-scale systems.
+      <p
+        style={{
+          color: "#8BAAC5",
+          lineHeight: 1.9,
+          marginBottom: "2rem",
+          fontSize: "15px",
+        }}
+      >
+        As thousands of satellites, launch vehicles, and debris objects
+        continue to populate space, mission operators require more than
+        dashboards—they need systems capable of transforming raw orbital data
+        into actionable intelligence.
       </p>
 
-      {/* Mission quote */}
+      {/* Mission Quote */}
 
-      <div style={{
-      borderLeft:"3px solid #00D4FF",
-      paddingLeft:"1.25rem",
-      marginBottom:"2.5rem",
-      color:"#E8F4FF",
-      fontSize:"16px",
-      fontStyle:"italic",
-      lineHeight:1.8
-      }}>
-       "Observe. Understand. Predict. Assist."
+      <div
+        style={{
+          borderLeft: "3px solid #00D4FF",
+          paddingLeft: "1.25rem",
+          marginBottom: "2.5rem",
+          color: "#E8F4FF",
+          fontSize: "16px",
+          fontStyle: "italic",
+          lineHeight: 1.8,
+        }}
+      >
+        "Observe. Simulate. Understand. Predict. Recommend."
       </div>
 
+      {/* WHY NIRIKSH */}
 
-      {/* MVP Features */}
-      <p style={{ letterSpacing:"2px", fontSize:"11px", color:"#00D4FF", marginBottom:"12px" }}>
-        CURRENT SCOPE — ORBITAL INTELLIGENCE
+      <p
+        style={{
+          letterSpacing: "2px",
+          fontSize: "11px",
+          color: "#00D4FF",
+          marginBottom: "12px",
+          textTransform: "uppercase",
+        }}
+      >
+        WHY NIRIKSH
       </p>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:"12px", marginBottom:"2.5rem" }}>
+
+      <div
+        style={{
+          background: "#0A1628",
+          border: "1px solid #1A2E44",
+          borderRadius: "12px",
+          padding: "1.5rem",
+          marginBottom: "2.5rem",
+        }}
+      >
+        <p
+          style={{
+            color: "#8BAAC5",
+            lineHeight: 1.8,
+            fontSize: "14px",
+          }}
+        >
+          The space industry is growing faster than ever.
+          New launch providers, satellite constellations, Earth observation
+          missions, and commercial operators are transforming Earth's orbit into
+          one of the most complex operational environments ever created.
+        </p>
+
+        <p
+          style={{
+            color: "#8BAAC5",
+            lineHeight: 1.8,
+            fontSize: "14px",
+            marginTop: "1rem",
+          }}
+        >
+          While hardware capabilities continue to advance rapidly, operational
+          software remains fragmented across multiple tools for tracking,
+          simulation, collision monitoring, and mission planning.
+        </p>
+
+        <p
+          style={{
+            color: "#E8F4FF",
+            lineHeight: 1.8,
+            fontSize: "14px",
+            marginTop: "1rem",
+            fontWeight: 500,
+          }}
+        >
+          Niriksh aims to unify these capabilities into a single intelligence
+          platform that transforms space data into operational decisions.
+        </p>
+      </div>
+
+      {/* Current MVP */}
+
+      <p
+        style={{
+          letterSpacing: "2px",
+          fontSize: "11px",
+          color: "#00D4FF",
+          marginBottom: "12px",
+          textTransform: "uppercase",
+        }}
+      >
+        CURRENT MVP — ORBITAL DIGITAL TWIN
+      </p>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+          gap: "14px",
+          marginBottom: "2.5rem",
+        }}
+      >
         {[
-          ["🌍", "Interactive 3D Earth", "Rotate, zoom, and explore the globe in real time"],
-          ["🛰️", "Live Satellite Tracking", "10 real satellites tracked via SGP4 propagation"],
-          ["📡", "TLE Orbit Data", "Public Two-Line Element sets from CelesTrak & Space-Track"],
-          ["🔍", "Search & Inspect", "Satellite list with live lat / lon / altitude readout"],
-          ["🌠", "Orbit Trail", "Visual trail rendered on selection"],
-          ["📊", "Orbital Analytics", "Basic analytics on orbital parameters"],
-        ].map(([icon, name, desc]) => (
-          <div key={name} style={{
-            background:"#0A1628", border:"1px solid #1A2E44",
-            borderRadius:"10px", padding:"1rem"
-          }}>
-            <div style={{ fontSize:"20px", marginBottom:"6px" }}>{icon}</div>
-            <div style={{ fontWeight:500, marginBottom:"4px", color:"#E8F4FF", fontSize:"14px" }}>{name}</div>
-            <div style={{ fontSize:"12px", color:"#4A6880", lineHeight:1.6 }}>{desc}</div>
+          [
+            "🌍",
+            "Interactive 3D Earth",
+            "Explore Earth's orbital environment in real time.",
+          ],
+          [
+            "🛰️",
+            "Live Satellite Tracking",
+            "Visualize satellites using real orbital propagation.",
+          ],
+          [
+            "📡",
+            "Orbit Propagation",
+            "Powered by public TLE datasets and SGP4.",
+          ],
+          [
+            "🔍",
+            "Satellite Explorer",
+            "Search and inspect satellites with live orbital data.",
+          ],
+          [
+            "🌠",
+            "Orbit Visualization",
+            "Visualize orbital trajectories around Earth.",
+          ],
+          [
+            "📊",
+            "Orbital Analytics",
+            "Understand altitude, inclination, velocity and orbital parameters.",
+          ],
+        ].map(([icon, title, desc]) => (
+          <div
+            key={title}
+            style={{
+              background: "#0A1628",
+              border: "1px solid #1A2E44",
+              borderRadius: "10px",
+              padding: "1rem",
+            }}
+          >
+            <div style={{ fontSize: "22px", marginBottom: "8px" }}>
+              {icon}
+            </div>
+
+            <div
+              style={{
+                color: "#E8F4FF",
+                fontWeight: 500,
+                marginBottom: "6px",
+                fontSize: "14px",
+              }}
+            >
+              {title}
+            </div>
+
+            <div
+              style={{
+                color: "#6D8CA7",
+                fontSize: "12px",
+                lineHeight: 1.7,
+              }}
+            >
+              {desc}
+            </div>
           </div>
         ))}
       </div>
 
-      <p style={{
-  color:"#4A6880",
-  fontSize:"13px",
-  marginTop:"1rem",
-  lineHeight:1.8
-}}>
-  Orbit is the first domain of the Niriksh platform. Future domains may include
-  climate systems, environmental monitoring, disaster resilience, infrastructure intelligence,
-  and planetary digital twins.
-</p>
+      {/* Vision */}
 
-{/* Long-Term Mission */}
+      <div
+        style={{
+          background: "#0A1628",
+          border: "1px solid #1A2E44",
+          borderRadius: "12px",
+          padding: "1.5rem",
+          marginBottom: "2.5rem",
+        }}
+      >
+        <p
+          style={{
+            letterSpacing: "2px",
+            fontSize: "11px",
+            color: "#00D4FF",
+            marginBottom: "12px",
+            textTransform: "uppercase",
+          }}
+        >
+          Long-Term Vision
+        </p>
 
-<div style={{
-  background:"#0A1628",
-  border:"1px solid #1A2E44",
-  borderRadius:"12px",
-  padding:"1.5rem",
-  marginBottom:"2.5rem"
-}}>
-  <p style={{
-    fontSize:"11px",
-    letterSpacing:"2px",
-    color:"#00D4FF",
-    marginBottom:"8px",
-    textTransform:"uppercase"
-  }}>
-    Long-Term Mission
-  </p>
+        <p
+          style={{
+            color: "#8BAAC5",
+            lineHeight: 1.9,
+            fontSize: "14px",
+          }}
+        >
+          Earth's orbit is only the first domain of the Niriksh intelligence
+          platform.
+        </p>
 
-  <p style={{
-    color:"#8BAAC5",
-    lineHeight:1.8,
-    fontSize:"14px",
-    fontStyle:"italic"
-  }}>
-    "To build digital twins of planetary-scale systems that continuously
-    observe, understand, predict, and support decision-making for humanity."
-  </p>
-</div>
+        <p
+          style={{
+            color: "#8BAAC5",
+            lineHeight: 1.9,
+            fontSize: "14px",
+            marginTop: "1rem",
+          }}
+        >
+          Future versions will expand into mission planning, operational
+          intelligence, AI-assisted decision support, digital mission twins, and
+          eventually broader planetary-scale systems such as climate,
+          environmental monitoring, disaster resilience, and infrastructure
+          intelligence.
+        </p>
 
+        <p
+          style={{
+            color: "#E8F4FF",
+            lineHeight: 1.9,
+            marginTop: "1.2rem",
+            fontStyle: "italic",
+          }}
+        >
+          "From orbital awareness to planetary intelligence."
+        </p>
+      </div>
 
       {/* CTA */}
-      <div style={{ textAlign:"center", paddingBottom:"2rem" }}>
-        <button onClick={onLaunch} style={{
-          padding:"12px 32px", background:"rgba(0,212,255,0.1)",
-          border:"1px solid #00D4FF", color:"#00D4FF",
-          borderRadius:"10px", cursor:"pointer", fontSize:"14px",
-          fontFamily:"'Space Grotesk', sans-serif", letterSpacing:"2px",
-          textTransform:"uppercase"
-        }}>
-          Launch Simulation →
+
+      <div style={{ textAlign: "center", paddingBottom: "2rem" }}>
+        <button
+          onClick={onLaunch}
+          style={{
+            padding: "12px 34px",
+            background: "rgba(0,212,255,0.1)",
+            border: "1px solid #00D4FF",
+            color: "#00D4FF",
+            borderRadius: "10px",
+            cursor: "pointer",
+            fontSize: "14px",
+            fontFamily: "'Space Grotesk', sans-serif",
+            letterSpacing: "2px",
+            textTransform: "uppercase",
+          }}
+        >
+          Launch Orbital Simulation →
         </button>
       </div>
     </div>
-  )
-}
-
-function SimulationSection() {
-  const mountRef = (canvas) => {
-    if (!canvas || canvas._started) return
-    canvas._started = true
-    const ctx = canvas.getContext("2d")
-
-    function resize() {
-      canvas.width = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
-    }
-    resize()
-    window.addEventListener("resize", resize)
-
-    const sats = [
-      { name:"ISS",      a:1.06, i:51.6, phase:0,   color:"#00ff88", period:5   },
-      { name:"Hubble",   a:1.08, i:28.5, phase:1,   color:"#ff6b35", period:6   },
-      { name:"Starlink", a:1.09, i:53.0, phase:2,   color:"#e76f51", period:5.5 },
-      { name:"Landsat8", a:1.11, i:98.2, phase:3,   color:"#4ecdc4", period:7   },
-      { name:"GOES-18",  a:6.61, i:0.1,  phase:0.5, color:"#e63946", period:24  },
-      { name:"Aqua",     a:1.11, i:98.2, phase:4,   color:"#457b9d", period:7   },
-      { name:"Terra",    a:1.10, i:98.2, phase:5,   color:"#a8dadc", period:6.8 },
-      { name:"NOAA 19",  a:1.11, i:99.1, phase:1.5, color:"#e9c46a", period:7.1 },
-      { name:"GPS BIIR", a:4.16, i:55.6, phase:2.5, color:"#f4a261", period:12  },
-      { name:"Sentinel", a:1.11, i:98.5, phase:3.5, color:"#2a9d8f", period:7.5 },
-    ]
-
-    let t = 0
-    function draw() {
-      const W = canvas.width, H = canvas.height
-      const cx = W/2, cy = H/2, sc = Math.min(W,H) * 0.28
-
-      ctx.fillStyle = "#020b18"
-      ctx.fillRect(0, 0, W, H)
-
-      for (let i = 0; i < 150; i++) {
-        const sx = (i * 173.1) % W
-        const sy = (i * 97.3 + 40) % H
-        const op = 0.2 + Math.sin(t * 0.5 + i) * 0.15
-        ctx.fillStyle = `rgba(255,255,255,${op})`
-        ctx.beginPath()
-        ctx.arc(sx, sy, i % 4 === 0 ? 1.2 : 0.6, 0, Math.PI*2)
-        ctx.fill()
-      }
-
-      const g = ctx.createRadialGradient(cx - sc*0.3, cy - sc*0.3, 0, cx, cy, sc)
-      g.addColorStop(0, "#1a6ea8")
-      g.addColorStop(0.6, "#0d3d6b")
-      g.addColorStop(1, "#050A14")
-      ctx.fillStyle = g
-      ctx.beginPath()
-      ctx.arc(cx, cy, sc, 0, Math.PI*2)
-      ctx.fill()
-
-      ctx.strokeStyle = "rgba(79,195,247,0.15)"
-      ctx.lineWidth = 4
-      ctx.beginPath()
-      ctx.arc(cx, cy, sc + 2, 0, Math.PI*2)
-      ctx.stroke()
-
-      sats.forEach(sat => {
-        const angle = sat.phase + (t / sat.period) * Math.PI * 2
-        const tilt = sat.i * Math.PI / 180
-        const x = cx + sat.a * sc * Math.cos(angle)
-        const y = cy - sat.a * sc * Math.sin(angle) * Math.cos(tilt)
-        const zVal = sat.a * Math.sin(angle) * Math.sin(tilt)
-        const behind = zVal < 0
-
-        ctx.globalAlpha = behind ? 0.25 : 1
-        if (!behind) { ctx.shadowColor = sat.color; ctx.shadowBlur = 6 }
-        ctx.fillStyle = sat.color
-        ctx.beginPath()
-        ctx.arc(x, y, 3.5, 0, Math.PI*2)
-        ctx.fill()
-        ctx.shadowBlur = 0
-
-        if (!behind) {
-          ctx.fillStyle = sat.color
-          ctx.font = "10px 'JetBrains Mono', monospace"
-          ctx.fillText(sat.name, x + 6, y - 4)
-        }
-        ctx.globalAlpha = 1
-      })
-
-      t += 0.016
-      requestAnimationFrame(draw)
-    }
-    draw()
-  }
-
-  return (
-    <div style={{ height:"100%", display:"flex", flexDirection:"column", padding:"12px", boxSizing:"border-box" }}>
-      <p style={{ color:"#4A6880", textAlign:"center", marginBottom:"8px", fontSize:"12px", fontFamily:"'JetBrains Mono', monospace", letterSpacing:"1px" }}>
-        LIVE ORBITAL SIMULATION — 10 SATELLITES
-      </p>
-      <canvas
-        ref={mountRef}
-        style={{ flex:1, width:"100%", borderRadius:"12px", border:"1px solid #1A2E44", display:"block" }}
-      />
-    </div>
-  )
+  );
 }
