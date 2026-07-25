@@ -1,189 +1,341 @@
-# Niriksh
+# 🌍 Niriksh
 
-## Building the Intelligence Layer for Planetary Systems
-
-Niriksh is a planetary intelligence platform that aims to observe, understand, simulate, and predict the complex systems that shape our world.
-
-From Earth's orbit and satellite infrastructure to climate, environment, and critical planetary processes, the future will require systems capable of understanding not only what is happening, but what is likely to happen next.
-
-Niriksh begins with space.
-
-Its long-term mission extends to Earth.
+> **Building the Intelligence Layer for Space Operations**
+>
+> *Observe • Simulate • Understand • Predict • Recommend*
 
 ---
 
-## Vision
+## 🚀 Overview
 
-Humanity is entering an era where decisions increasingly depend on understanding large-scale interconnected systems.
+Niriksh is an AI-powered space intelligence platform designed to transform how humanity understands and operates in space.
 
-Satellites monitor Earth.
+As the global space economy rapidly expands, thousands of satellites, launch vehicles, debris objects, and supporting infrastructure are creating an increasingly complex orbital environment. While remarkable progress has been made in space hardware, operators still rely on fragmented software tools for visualization, mission planning, collision monitoring, and operational decision-making.
 
-Climate influences infrastructure.
+Niriksh aims to bridge this gap by building an intelligence layer that continuously observes, simulates, understands, predicts, and recommends actions across the entire lifecycle of space missions.
 
-Environmental changes affect economies.
+Rather than simply displaying data, Niriksh is being built to answer:
 
-Orbital activity impacts communication, navigation, and security.
-
-Yet these systems are often analyzed in isolation.
-
-Niriksh aims to build a unified intelligence layer capable of answering questions such as:
-
-* What is happening right now?
-* Why is it happening?
-* What is likely to happen next?
-* What actions should be taken?
-
-The goal is not simply to collect data.
-
-The goal is to transform data into awareness, prediction, and decision intelligence.
+* **What is happening?**
+* **Why is it happening?**
+* **What is likely to happen next?**
+* **What should we do about it?**
 
 ---
 
-## Core Mission
+# 🌌 Vision
 
-> To build digital representations of planetary-scale systems that continuously observe, understand, predict, and assist human decision-making.
+We believe the future of space operations will not be defined by who owns the most data.
 
----
+It will be defined by who can transform that data into actionable intelligence.
 
-## Current Focus: Orbital Intelligence
+Our long-term vision is to build the operating intelligence layer for space systems and eventually extend that architecture toward planetary-scale intelligence.
 
-Earth's orbit is becoming increasingly crowded as thousands of satellites and debris objects continue to populate space.
-
-Niriksh's first domain focuses on understanding this orbital environment through:
-
-* Real-time satellite tracking
-* Orbit propagation and simulation
-* Orbital analytics
-* Conjunction awareness
-* Orbital risk assessment
-
-Orbit serves as the first layer of the Niriksh intelligence platform.
-
----
-
-## Long-Term Roadmap
-
-### Phase 1 — Awareness
-
-Build systems capable of observing and visualizing complex environments.
-
-Initial focus:
-
-* Satellite tracking
-* Orbital visualization
-* Object monitoring
-* Environmental data integration
-
----
-
-### Phase 2 — Understanding
-
-Move beyond observation toward system-level understanding.
-
-Capabilities:
-
-* Risk analysis
-* Pattern detection
-* Congestion analysis
-* Anomaly identification
-
----
-
-### Phase 3 — Prediction
-
-Develop predictive models that estimate future system states.
-
-Capabilities:
-
-* Collision forecasting
-* Orbital evolution prediction
-* Environmental forecasting
-* Infrastructure risk prediction
-
----
-
-### Phase 4 — Decision Intelligence
-
-Provide actionable recommendations rather than raw information.
-
-Capabilities:
-
-* Maneuver recommendations
-* Resource optimization
-* Mission planning
-* Risk mitigation strategies
-
----
-
-### Phase 5 — Planetary Digital Twin
-
-Create continuously updated digital representations of critical planetary systems.
-
-Potential domains include:
-
-* Earth's orbital environment
-* Climate systems
-* Environmental monitoring
-* Infrastructure resilience
-* Disaster preparedness
-* Space-Earth interaction analysis
-
----
-
-### Phase 6 — Planetary Operating System
-
-A future platform capable of coordinating intelligence across multiple domains.
-
-The objective is to help governments, organizations, researchers, and operators make informed decisions using real-time awareness and predictive intelligence.
-
----
-
-## Project Philosophy
-
-Most systems today answer:
-
-> What happened?
-
-Some systems answer:
-
-> What is happening?
-
-Niriksh aims to answer:
-
-> What will happen next, and what should we do about it?
-
-The mission is not simply to track objects.
-
-The mission is to understand systems.
-
----
-
-## Current MVP
-
-The first version of Niriksh focuses on orbital intelligence:
-
-* Interactive 3D Earth visualization
-* Real-time satellite simulation
-* Orbit propagation using public TLE data
-* Satellite search and inspection
-* Basic orbital analytics
-
-This forms the foundation for future intelligence and simulation capabilities.
-
----
-
-## Long-Term Vision
-
-> To build the intelligence layer that helps humanity understand, predict, and navigate complex planetary-scale systems.
-
-The journey begins with orbit.
+The journey begins with Earth's orbit.
 
 The destination is planetary intelligence.
 
 ---
 
-## Status
+# 🎯 Mission
 
-🚧 Early Development
+> **Transform space data into intelligent decisions.**
 
-Currently focused on building the first orbital awareness and simulation layer while laying the foundation for a broader planetary intelligence platform.
+Our mission is to build digital representations of complex space environments that continuously:
+
+* Observe
+* Simulate
+* Understand
+* Predict
+* Assist
+
+so that operators can make faster, safer, and more informed decisions.
+
+---
+
+# ❓ Why Niriksh?
+
+The private space industry is growing faster than ever.
+
+New launch providers.
+
+New satellite constellations.
+
+New Earth observation missions.
+
+New commercial space companies.
+
+But mission operations remain fragmented.
+
+Today, organizations often rely on multiple independent systems for:
+
+* Orbit propagation
+* Satellite tracking
+* Collision monitoring
+* Mission planning
+* Space weather
+* Ground station scheduling
+* Fleet monitoring
+* Operational analytics
+
+These systems generate enormous amounts of information, but very little decision intelligence.
+
+Niriksh aims to unify these capabilities into a single intelligent platform.
+
+---
+
+# 🛰 Current Focus — Orbital Intelligence
+
+Niriksh begins by building a digital twin of Earth's orbital environment.
+
+This first phase focuses on creating a real-time simulation capable of representing every tracked satellite and space object currently in orbit.
+
+Core capabilities include:
+
+* 🌍 Interactive 3D Earth visualization
+* 🛰 Real-time satellite tracking
+* 📡 Orbit propagation using public TLE data
+* 🔍 Satellite search and inspection
+* 🌐 Constellation visualization
+* 📈 Orbital analytics
+* ☄️ Space debris visualization
+* 📊 Orbital history and future trajectory prediction
+
+This orbital simulation forms the foundation upon which all future intelligence capabilities will be built.
+
+---
+
+# 🏗 Roadmap
+
+## Phase 1 — Orbital Awareness
+
+Build a real-time digital twin of Earth's orbital environment.
+
+### Capabilities
+
+* Satellite tracking
+* Orbit propagation
+* Space object catalog
+* Constellation visualization
+* Orbit history
+* Future trajectory prediction
+* Interactive visualization
+
+---
+
+## Phase 2 — Orbital Intelligence
+
+Move beyond visualization toward understanding orbital behavior.
+
+### Capabilities
+
+* Collision awareness
+* Orbital congestion analysis
+* Satellite behavior analytics
+* Pattern detection
+* Anomaly identification
+* Orbital event detection
+
+---
+
+## Phase 3 — Predictive Intelligence
+
+Predict how the orbital environment will evolve.
+
+### Capabilities
+
+* Collision prediction
+* Orbital evolution forecasting
+* Space debris forecasting
+* Orbital decay estimation
+* Re-entry prediction
+* Space weather impact analysis
+
+---
+
+## Phase 4 — Decision Intelligence
+
+Recommend actions instead of presenting raw information.
+
+### Capabilities
+
+* Maneuver recommendations
+* Mission planning assistance
+* Fuel optimization
+* Launch window evaluation
+* Operational risk mitigation
+* AI-powered mission assistant
+
+---
+
+## Phase 5 — Space Operations Platform
+
+Expand from orbital awareness into complete mission operations.
+
+Potential capabilities include:
+
+* Mission planning
+* Fleet monitoring
+* Mission simulation
+* Digital mission twins
+* Ground station optimization
+* Telemetry analytics
+* Resource optimization
+* Multi-mission coordination
+
+---
+
+## Phase 6 — Planetary Intelligence
+
+Extend the same intelligence architecture beyond orbit.
+
+Future domains may include:
+
+* Climate systems
+* Environmental monitoring
+* Earth observation
+* Infrastructure resilience
+* Disaster response
+* Space-Earth interaction analysis
+* Planetary-scale simulations
+
+---
+
+# 💡 Core Philosophy
+
+Most platforms answer:
+
+> **What happened?**
+
+Some platforms answer:
+
+> **What is happening?**
+
+Niriksh aims to answer:
+
+> **What will happen next?**
+
+and ultimately,
+
+> **What should we do about it?**
+
+The objective is not to build another visualization platform.
+
+The objective is to build an intelligence engine capable of reasoning about complex space systems.
+
+---
+
+# 🧠 The Niriksh Intelligence Pipeline
+
+```text
+               Space Data Sources
+                       │
+     ┌─────────────────┼──────────────────┐
+     │                 │                  │
+  CelesTrak       Space-Track        Other Sources
+     │                 │                  │
+     └─────────────────┼──────────────────┘
+                       │
+                Data Ingestion Layer
+                       │
+               Orbit Propagation Engine
+                   (SGP4 / Orekit)
+                       │
+                Orbital Digital Twin
+                       │
+         Simulation & Physics-Based Analytics
+                       │
+               AI & Decision Intelligence
+                       │
+             Recommendations & Insights
+```
+
+---
+
+# 🛠 Technology Stack
+
+## Frontend
+
+* React
+* TypeScript
+* CesiumJS
+
+## Backend
+
+* Python
+* FastAPI
+* PostgreSQL
+
+## Space Technologies
+
+* SGP4
+* Orekit
+* Poliastro
+* CelesTrak
+* Space-Track
+
+## AI & Analytics
+
+* Machine Learning
+* Time-Series Forecasting
+* Graph Analytics
+* Large Language Models
+* Agentic AI
+
+---
+
+# 🚧 Current MVP
+
+The first version of Niriksh focuses on building an accurate and interactive digital twin of Earth's orbital environment.
+
+### MVP Features
+
+* Interactive 3D Earth
+* Live satellite visualization
+* Orbit propagation
+* Satellite search
+* Object inspection
+* Orbital path visualization
+* Basic orbital analytics
+
+This MVP is intended to establish the simulation layer that future intelligence modules will build upon.
+
+---
+
+# 🔮 Long-Term Vision
+
+Imagine asking a platform:
+
+> *Which satellites require attention today?*
+
+> *What is the safest maneuver for this spacecraft?*
+
+> *How will this conjunction evolve over the next 48 hours?*
+
+> *Which launch window minimizes operational risk?*
+
+> *What are the most critical risks across my entire satellite fleet?*
+
+Niriksh aims to become the intelligence layer capable of answering these questions.
+
+---
+
+# 📌 Project Status
+
+**🚧 Early Development**
+
+The current focus is on building a high-fidelity digital twin of Earth's orbital environment that will serve as the foundation for future simulation, analytics, prediction, and AI-assisted decision intelligence.
+
+---
+
+# 🌍 Looking Ahead
+
+Niriksh begins with orbit.
+
+Its long-term ambition extends far beyond visualization or tracking.
+
+The vision is to build a platform capable of helping humanity understand, simulate, predict, and navigate increasingly complex planetary-scale systems.
+
+**From orbital awareness...**
+
+**...to planetary intelligence.**
