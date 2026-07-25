@@ -1,3 +1,12 @@
+function App() {
+  const handleLaunch = () => {
+    // TODO: navigation/simulation launch logic yahan aayega
+    console.log("Launch clicked");
+  };
+
+  return <AboutSection onLaunch={handleLaunch} />;
+}
+
 function AboutSection({ onLaunch }) {
   return (
     <div
@@ -321,3 +330,5 @@ function AboutSection({ onLaunch }) {
     </div>
   );
 }
+
+export default App;
