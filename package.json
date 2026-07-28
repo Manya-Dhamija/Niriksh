@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "pretle": "node scripts/fetchTle.mjs",
+    "prebuild": "node scripts/fetchTle.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },

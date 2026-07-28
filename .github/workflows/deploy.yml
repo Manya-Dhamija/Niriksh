@@ -30,6 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
+        # prebuild runs scripts/fetchTle.mjs (CelesTrak TLE refresh; needs network)
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
