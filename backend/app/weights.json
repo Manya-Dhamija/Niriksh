@@ -1,0 +1,12 @@
+{
+  "_comment": "Weights must sum to 1.0. Edit this file to re-tune the Project Feasibility Score methodology without touching code. See README > Scoring Methodology for the rationale behind each weight.",
+  "solar_resource": 0.24,
+  "terrain": 0.11,
+  "land_use": 0.11,
+  "road_access": 0.09,
+  "grid_proximity": 0.16,
+  "environmental_constraints": 0.10,
+  "flood_exposure": 0.08,
+  "extreme_heat": 0.06,
+  "water_availability": 0.05
+}
