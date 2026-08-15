@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Niriksh — Site Intelligence for Solar Developers</title>
+<meta name="description" content="Niriksh helps renewable-energy developers identify and rank sites for new solar projects by combining land, solar potential, terrain, grid proximity, environmental constraints, and climate risk into one feasibility score." />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23F0A93F' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%23F0A93F' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23F0A93F'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="scan-progress" id="scanProgress"></div>
+
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="siteNav">
+  <a href="#home" class="nav-logo" data-tab-link data-target="home">
+    <svg viewBox="0 0 100 100" class="logo-mark" aria-hidden="true">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="4" opacity="0.35"/>
+      <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="4" opacity="0.65"/>
+      <circle cx="50" cy="50" r="7" fill="currentColor"/>
+    </svg>
+    <span class="nav-logo-text">NIRIKSH</span>
+  </a>
+
+  <nav class="nav-tabs" id="navTabs" aria-label="Primary">
+    <button class="nav-tab active" data-tab-link data-target="home">Home</button>
+    <button class="nav-tab" data-tab-link data-target="about">About</button>
+    <button class="nav-tab" data-tab-link data-target="services">Services</button>
+    <button class="nav-tab" data-tab-link data-target="contact">Contact</button>
+    <span class="nav-tab-glider" id="navGlider" aria-hidden="true"></span>
+  </nav>
+
+  <a href="app/index.html" class="nav-cta" target="_blank" rel="noopener">Launch Score Engine ↗</a>
+
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="nav-tab-mobile" data-tab-link data-target="home">Home</button>
+  <button class="nav-tab-mobile" data-tab-link data-target="about">About</button>
+  <button class="nav-tab-mobile" data-tab-link data-target="services">Services</button>
+  <button class="nav-tab-mobile" data-tab-link data-target="contact">Contact</button>
+</div>
+
+<main id="viewport">
+
+<!-- ============ HOME ============ -->
+<section class="view active" data-view="home" id="home">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow reveal-up">SECTOR&nbsp;12.4&nbsp;/&nbsp;GEOSPATIAL FEASIBILITY ENGINE</p>
+      <h1 class="hero-title">
+        <span class="reveal-up" style="--d:0">Know the land</span>
+        <span class="reveal-up" style="--d:1">before you</span>
+        <span class="reveal-up hero-title-accent" style="--d:2">break ground.</span>
+      </h1>
+      <p class="hero-sub reveal-up" style="--d:3">
+        Niriksh combines land data, solar potential, terrain, grid proximity, environmental
+        constraints and climate risk into a single feasibility score &mdash; so your team can
+        rank a hundred parcels as fast as you can list them.
+      </p>
+      <div class="hero-actions reveal-up" style="--d:4">
+        <a href="app/index.html" class="btn btn-solar magnetic" target="_blank" rel="noopener">Launch the Score Engine ↗</a>
+        <a href="#services" class="btn btn-ghost magnetic" data-tab-link data-target="services">See how scoring works</a>
+      </div>
+      <p class="hero-note reveal-up" style="--d:4">
+        A real, working prototype &mdash; score 5 reference sites across India or draw your own boundary.
+        Prefer to talk first? <a href="#contact" data-tab-link data-target="contact" class="hero-note-link">Get in touch</a>.
+      </p>
+    </div>
+
+    <div class="scan-wrap reveal-up" style="--d:5">
+      <canvas id="scanCanvas"></canvas>
+      <p class="scan-hint">Move your cursor over the map &mdash; scan reveals the Niriksh Score</p>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>LAND&nbsp;PARCELS</span><span>&middot;</span><span>SOLAR&nbsp;IRRADIANCE</span><span>&middot;</span>
+      <span>TERRAIN&nbsp;SLOPE</span><span>&middot;</span><span>GRID&nbsp;PROXIMITY</span><span>&middot;</span>
+      <span>ENVIRONMENTAL&nbsp;CONSTRAINTS</span><span>&middot;</span><span>CLIMATE&nbsp;RISK</span><span>&middot;</span>
+      <span>LAND&nbsp;PARCELS</span><span>&middot;</span><span>SOLAR&nbsp;IRRADIANCE</span><span>&middot;</span>
+      <span>TERRAIN&nbsp;SLOPE</span><span>&middot;</span><span>GRID&nbsp;PROXIMITY</span><span>&middot;</span>
+      <span>ENVIRONMENTAL&nbsp;CONSTRAINTS</span><span>&middot;</span><span>CLIMATE&nbsp;RISK</span><span>&middot;</span>
+    </div>
+  </div>
+
+  <section class="section section-paper">
+    <div class="section-inner">
+      <p class="kicker">ONE SCORE, SIX LAYERS</p>
+      <h2 class="section-title">Every layer that decides whether a site works &mdash; merged into one number.</h2>
+
+      <div class="layer-grid">
+        <div class="layer-card reveal-up">
+          <span class="layer-tag">01</span>
+          <h3>Land</h3>
+          <p>Parcel boundaries, ownership status and land-use classification, screened before anything else.</p>
+        </div>
+        <div class="layer-card reveal-up">
+          <span class="layer-tag">02</span>
+          <h3>Solar Potential</h3>
+          <p>GHI/DNI irradiance history and seasonal variance for realistic yield estimates.</p>
+        </div>
+        <div class="layer-card reveal-up">
+          <span class="layer-tag">03</span>
+          <h3>Terrain</h3>
+          <p>Slope, aspect and elevation profile, since flat, buildable land isn't guesswork.</p>
+        </div>
+        <div class="layer-card reveal-up">
+          <span class="layer-tag">04</span>
+          <h3>Grid Proximity</h3>
+          <p>Distance to substations and transmission lines, and indicative interconnection cost.</p>
+        </div>
+        <div class="layer-card reveal-up">
+          <span class="layer-tag">05</span>
+          <h3>Environmental Constraints</h3>
+          <p>Protected areas, forest cover, wetlands and land-use conflicts flagged early.</p>
+        </div>
+        <div class="layer-card reveal-up">
+          <span class="layer-tag">06</span>
+          <h3>Climate Risk</h3>
+          <p>Flood, heat and storm exposure, plus long-range shifts in irradiance and rainfall.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-ink stat-strip">
+    <div class="section-inner stat-inner">
+      <div class="stat reveal-up">
+        <span class="stat-num" data-count="6">0</span>
+        <span class="stat-label">data layers merged<br>per parcel</span>
+      </div>
+      <div class="stat reveal-up">
+        <span class="stat-num" data-count="100">0</span>
+        <span class="stat-label">point Niriksh Score,<br>zero to a hundred</span>
+      </div>
+      <div class="stat reveal-up">
+        <span class="stat-num" data-count="1">0</span>
+        <span class="stat-label">ranked shortlist,<br>not six spreadsheets</span>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="view" data-view="about" id="about">
+  <section class="section section-paper page-head">
+    <div class="section-inner">
+      <p class="eyebrow eyebrow-dark">ABOUT NIRIKSH</p>
+      <h1 class="page-title">Niriksh means &ldquo;close observation.&rdquo;</h1>
+      <p class="page-lede">
+        From the Sanskrit <em>nirikshan</em> &mdash; to inspect, to survey, to look closely
+        before deciding. That's the whole premise: a solar developer shouldn't have to
+        choose a site on a hunch, a broker's word, or a single satellite photo.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="section-inner two-col">
+      <div>
+        <p class="kicker">WHY WE BUILT THIS</p>
+        <h2 class="section-title">Site selection was six spreadsheets and a gut feeling.</h2>
+        <p class="body-text">
+          Land teams evaluating solar sites usually pull irradiance data from one source,
+          terrain from another, grid maps from a state utility PDF, and environmental
+          constraints from whoever answers the phone. Every parcel gets judged on
+          whatever data happened to be easiest to find that week.
+        </p>
+        <p class="body-text">
+          Niriksh puts land, solar potential, terrain, grid proximity, environmental
+          constraints and climate risk on the same footing, so a 40-acre parcel in one
+          state can be compared honestly against one three states away.
+        </p>
+      </div>
+      <div>
+        <p class="kicker">WHO IT'S FOR</p>
+        <h2 class="section-title">Built for the people doing the shortlisting.</h2>
+        <ul class="check-list">
+          <li>Land acquisition &amp; site selection teams</li>
+          <li>Independent power producers (IPPs) building pipeline</li>
+          <li>EPC contractors screening opportunities</li>
+          <li>Developer-operators evaluating a broker's offer</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-ink">
+    <div class="section-inner">
+      <p class="kicker kicker-light">HOW WE SEE A SITE</p>
+      <h2 class="section-title section-title-light">From raw layers to one ranked list.</h2>
+
+      <ol class="process-list">
+        <li class="process-step reveal-up">
+          <span class="process-num">01</span>
+          <div>
+            <h3>Ingest</h3>
+            <p>Pull land parcels, solar irradiance, terrain elevation, grid infrastructure,
+            protected-area boundaries and climate hazard layers for the region.</p>
+          </div>
+        </li>
+        <li class="process-step reveal-up">
+          <span class="process-num">02</span>
+          <div>
+            <h3>Normalize</h3>
+            <p>Convert every layer &mdash; wildly different units and scales &mdash; into a
+            comparable 0&ndash;100 sub-score, so slope and substation distance can sit
+            side by side.</p>
+          </div>
+        </li>
+        <li class="process-step reveal-up">
+          <span class="process-num">03</span>
+          <div>
+            <h3>Weight</h3>
+            <p>Combine sub-scores using weights that reflect your priorities &mdash;
+            grid access matters more in some states, land cost more in others.</p>
+          </div>
+        </li>
+        <li class="process-step reveal-up">
+          <span class="process-num">04</span>
+          <div>
+            <h3>Rank</h3>
+            <p>Output one Niriksh Score per parcel, and rank the whole shortlist so the
+            best sites rise to the top automatically.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="section-inner">
+      <p class="kicker">PRINCIPLES</p>
+      <h2 class="section-title">Three rules we don't bend on.</h2>
+      <div class="value-grid">
+        <div class="value-card reveal-up">
+          <h3>Evidence over guesswork</h3>
+          <p>Every sub-score traces back to a named data layer. No unexplained numbers.</p>
+        </div>
+        <div class="value-card reveal-up">
+          <h3>Transparent scoring</h3>
+          <p>You can always see why a site scored what it did, layer by layer, not just the final number.</p>
+        </div>
+        <div class="value-card reveal-up">
+          <h3>Built for developers</h3>
+          <p>No GIS degree required. If you can read a ranked list, you can use Niriksh.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="view" data-view="services" id="services">
+  <section class="section section-paper page-head">
+    <div class="section-inner">
+      <p class="eyebrow eyebrow-dark">SERVICES</p>
+      <h1 class="page-title">What Niriksh does for your pipeline.</h1>
+      <p class="page-lede">
+        Six capabilities, one workflow: bring a region or a shortlist, leave with a
+        ranked, explainable list of where to actually spend diligence budget.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="section-inner">
+      <div class="service-grid">
+
+        <div class="service-card reveal-up">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M6 40L18 14L28 30L34 20L42 40" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="18" cy="14" r="3" fill="currentColor"/></svg>
+          <h3>Site Screening &amp; Ranking</h3>
+          <p>Feed in a region or a list of parcels and get every one screened and ranked
+          by feasibility, in bulk, instead of one report at a time.</p>
+        </div>
+
+        <div class="service-card reveal-up">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="3"/><path d="M24 24L24 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 24L33 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>Feasibility Scoring Engine</h3>
+          <p>The core of Niriksh &mdash; land, solar, terrain, grid, environment and
+          climate risk merged into one 0&ndash;100 score per parcel.</p>
+        </div>
+
+        <div class="service-card reveal-up">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M4 34L16 22L24 28L44 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 40H44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>Terrain &amp; Grid Analysis</h3>
+          <p>Slope, aspect and elevation profiling alongside distance to substations
+          and transmission lines, with an indicative interconnection cost signal.</p>
+        </div>
+
+        <div class="service-card reveal-up">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M24 6C24 6 12 18 12 27a12 12 0 0024 0C36 18 24 6 24 6z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+          <h3>Environmental &amp; Land-Use Constraints</h3>
+          <p>Protected areas, forest cover, wetlands and zoning conflicts flagged before
+          they become a diligence surprise.</p>
+        </div>
+
+        <div class="service-card reveal-up">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M8 30C8 30 14 18 24 18C34 18 40 30 40 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M4 36H44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M14 36V30M24 36V26M34 36V30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>Climate Risk Assessment</h3>
+          <p>Flood, extreme-heat and storm exposure, plus long-range shifts in
+          irradiance, so today's yield estimate survives the next twenty years.</p>
+        </div>
+
+        <div class="service-card reveal-up">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="28" rx="2" stroke="currentColor" stroke-width="3"/><path d="M13 20H35M13 27H29" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>Custom Reports &amp; API</h3>
+          <p>Export due-diligence-ready reports per site, or pull Niriksh Scores
+          straight into your own pipeline tools via API.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive scoring demo -->
+  <section class="section section-ink">
+    <div class="section-inner">
+      <p class="kicker kicker-light">TRY IT</p>
+      <h2 class="section-title section-title-light">Drag the factors. Watch the score move.</h2>
+      <p class="body-text body-text-light demo-note">
+        A simplified, illustrative version of the Niriksh Score for one example parcel &mdash;
+        five sliders, one gauge, no data behind it.
+      </p>
+
+      <div class="engine-callout reveal-up">
+        <div>
+          <span class="engine-callout-tag">THE REAL THING</span>
+          <h3>This is a mockup. The Score Engine isn't.</h3>
+          <p>Score 5 real reference sites across India, or draw your own boundary on the map,
+          and get all 9 factors computed from real source-attributed data &mdash; not sliders.</p>
+        </div>
+        <a href="app/index.html" class="btn btn-solar magnetic" target="_blank" rel="noopener">Launch the Score Engine ↗</a>
+      </div>
+
+      <div class="demo-panel reveal-up">
+        <div class="demo-sliders">
+          <div class="slider-row">
+            <label for="s1">Solar Potential</label>
+            <input type="range" min="0" max="100" value="72" id="s1" class="factor-slider" data-color="solar">
+            <span class="slider-val" id="s1val">72</span>
+          </div>
+          <div class="slider-row">
+            <label for="s2">Terrain Suitability</label>
+            <input type="range" min="0" max="100" value="58" id="s2" class="factor-slider" data-color="terrain">
+            <span class="slider-val" id="s2val">58</span>
+          </div>
+          <div class="slider-row">
+            <label for="s3">Grid Proximity</label>
+            <input type="range" min="0" max="100" value="81" id="s3" class="factor-slider" data-color="grid">
+            <span class="slider-val" id="s3val">81</span>
+          </div>
+          <div class="slider-row">
+            <label for="s4">Environmental Clearance</label>
+            <input type="range" min="0" max="100" value="66" id="s4" class="factor-slider" data-color="env">
+            <span class="slider-val" id="s4val">66</span>
+          </div>
+          <div class="slider-row">
+            <label for="s5">Climate Resilience</label>
+            <input type="range" min="0" max="100" value="60" id="s5" class="factor-slider" data-color="climate">
+            <span class="slider-val" id="s5val">60</span>
+          </div>
+        </div>
+
+        <div class="demo-gauge">
+          <svg viewBox="0 0 180 180" class="gauge-svg">
+            <circle cx="90" cy="90" r="70" class="gauge-track"/>
+            <circle cx="90" cy="90" r="70" class="gauge-fill" id="gaugeFill"/>
+          </svg>
+          <div class="gauge-readout">
+            <span class="gauge-num" id="gaugeNum">67</span>
+            <span class="gauge-max">/100</span>
+            <span class="gauge-tag" id="gaugeTag">GOOD SITE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="view" data-view="contact" id="contact">
+  <section class="section section-paper page-head">
+    <div class="section-inner">
+      <p class="eyebrow eyebrow-dark">CONTACT</p>
+      <h1 class="page-title">Bring us your shortlist.<br>We'll bring the score.</h1>
+      <p class="page-lede">
+        Tell us about the sites or region you're evaluating and we'll walk you through
+        how a Niriksh Score would apply to your pipeline.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="section-inner two-col contact-grid">
+      <div class="contact-info">
+        <div class="info-block reveal-up">
+          <span class="info-label">EMAIL</span>
+          <a href="mailto:hello@niriksh.com" class="info-value">hello@niriksh.com</a>
+        </div>
+        <div class="info-block reveal-up">
+          <span class="info-label">BASED IN</span>
+          <span class="info-value">India &mdash; working with sites nationwide</span>
+        </div>
+        <div class="info-block reveal-up">
+          <span class="info-label">RESPONSE TIME</span>
+          <span class="info-value">Within 2 business days</span>
+        </div>
+        <div class="info-block reveal-up">
+          <span class="info-label">ELSEWHERE</span>
+          <div class="social-row">
+            <a href="#" class="social-link" aria-label="Niriksh on LinkedIn">LinkedIn</a>
+            <a href="#" class="social-link" aria-label="Niriksh on X">X / Twitter</a>
+            <a href="https://github.com/Manya-Dhamija/Niriksh" class="social-link" aria-label="Niriksh on GitHub">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form reveal-up" id="contactForm">
+        <div class="form-row">
+          <label for="fname">Name</label>
+          <input type="text" id="fname" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-row">
+          <label for="femail">Work email</label>
+          <input type="email" id="femail" name="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-row">
+          <label for="forg">Organization</label>
+          <input type="text" id="forg" name="org" placeholder="Company / developer name">
+        </div>
+        <div class="form-row">
+          <label for="fmsg">What are you evaluating?</label>
+          <textarea id="fmsg" name="message" rows="4" placeholder="A region, a shortlist of parcels, a specific state..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-solar magnetic full-width">Send message</button>
+        <p class="form-hint" id="formHint">This opens your email app with the details filled in.</p>
+      </form>
+    </div>
+  </section>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="section-inner footer-inner">
+    <div class="footer-brand">
+      <svg viewBox="0 0 100 100" class="logo-mark" aria-hidden="true">
+        <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="4" opacity="0.35"/>
+        <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="4" opacity="0.65"/>
+        <circle cx="50" cy="50" r="7" fill="currentColor"/>
+      </svg>
+      <span>NIRIKSH</span>
+    </div>
+    <p class="footer-tag">Site intelligence for solar developers.</p>
+    <div class="footer-links">
+      <button data-tab-link data-target="home">Home</button>
+      <button data-tab-link data-target="about">About</button>
+      <button data-tab-link data-target="services">Services</button>
+      <button data-tab-link data-target="contact">Contact</button>
+    </div>
+    <p class="footer-copy">&copy; 2026 Niriksh. Built for renewable-energy developers.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
