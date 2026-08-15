@@ -9,5 +9,5 @@
 // works if you are running the backend on your own machine.
 
 window.__NIRIKSH_CONFIG__ = {
-  apiBaseUrl: "" // e.g. "https://niriksh-backend.onrender.com"
+  apiBaseUrl: "https://niriksh-cf5y.onrender.com" // e.g. "https://niriksh-backend.onrender.com"
 };
